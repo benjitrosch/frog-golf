@@ -1,0 +1,60 @@
+@import 'fonts';
+@import 'palette';
+
+@import 'scrollbar';
+@import 'buttons';
+@import 'modal';
+@import 'notification';
+
+* {
+  font-family: 'Karla', sans-serif;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+button,
+input {
+  border: none;
+  outline: none;
+}
+
+h1,
+h2 {
+  font-size: 24px;
+}
+
+h1 {
+  font-weight: 700;
+  color: $text;
+}
+
+h2 {
+  font-weight: 300;
+  color: $text-alt;
+}
+
+p {
+  font-weight: 100;
+}
+
+hr {
+  width: 75%;
+  height: 1px;
+
+  outline: none;
+  border: none;
+
+  background: $trim;
+}
