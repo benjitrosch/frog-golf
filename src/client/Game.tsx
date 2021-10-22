@@ -6,7 +6,7 @@ import Canvas from './game/system/Canvas'
 import RenderContext2D from './game/system/RenderContext2D'
 import EntityManager from './game/entity/EntityManager'
 
-import { FRAMERATE } from './game/Constants'
+import { FRAMERATE, GAME_HEIGHT, GAME_WIDTH } from './game/Constants'
 
 import PlayableFrog from './game/entity/actors/Frog/PlayableFrog'
 
@@ -26,7 +26,8 @@ const Game = (): JSX.Element => {
   }, [])
 
   const Initialize = () => {
-    entityManager.AddEntity(new PlayableFrog(0, 0))
+    // Player frog
+    entityManager.AddEntity(new PlayableFrog(GAME_WIDTH / 2, 0))
   }
 
   const Run = (render2D: RenderContext2D, time: Time) => {
@@ -50,6 +51,10 @@ const Game = (): JSX.Element => {
   }
 
   const Draw = (render2D: RenderContext2D, time: Time) => {
+    const { graphics } = render2D
+
+    graphics.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+
     entityManager.Draw(render2D, time)
   }
 

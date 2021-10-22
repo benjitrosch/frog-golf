@@ -16,5 +16,7 @@ export default class Time {
     this.startTime = new Date().getTime()
 
     this.unscaledTime = 0
+
+    this.timeScale = 1
   }
 }

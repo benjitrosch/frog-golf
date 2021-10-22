@@ -60,20 +60,21 @@ export default abstract class Actor<S> extends Entity {
   protected onGround: boolean
 
   public state: S
-  protected sprites: Sprite[]
+  protected spritesLeft: Sprite<S>[]
+  protected spritesRight: Sprite<S>[]
 
   public level: Level
 
   constructor(x, y, size) {
     super()
 
-    this.x = x
-    this.y = y
+    this.x = x - size / 2
+    this.y = y - size / 2
     this.vx = 0
     this.vy = 0
 
     this.size = size
-    this.direction = Direction.LEFT
+    this.direction = Direction.RIGHT
     this.onGround = true
   }
 
@@ -103,7 +104,7 @@ export default abstract class Actor<S> extends Entity {
     this.y += this.vy
 
     //Apply gravity
-    if (this.testCollide(0, -GRAVITY) == undefined) {
+    if (this.testCollide(0, -GRAVITY).side == undefined) {
       this.vy -= GRAVITY
       this.onGround = false
     }
@@ -118,7 +119,7 @@ export default abstract class Actor<S> extends Entity {
 
   abstract Draw(render2D: RenderContext2D, time: Time)
 
-  abstract getDrawImage(): Sprite
+  abstract getDrawImage(): Sprite<S>
 
   setState(state: S) {
     if (this.state !== state) {
@@ -229,6 +230,8 @@ export default abstract class Actor<S> extends Entity {
     this.x = w
     this.vx *= -1 * BOUND_FRICTION
 
+    this.direction = Math.sign(this.vx)
+
     if (onHit != null) {
       onHit()
     }
@@ -237,6 +240,8 @@ export default abstract class Actor<S> extends Entity {
   collideToRight(w, onHit?: () => void) {
     this.x = w - this.size
     this.vx *= -1 * BOUND_FRICTION
+
+    this.direction = Math.sign(this.vx)
 
     if (onHit != null) {
       onHit()
@@ -262,5 +267,10 @@ export default abstract class Actor<S> extends Entity {
     if (onHit != null) {
       onHit()
     }
+  }
+
+  moveTo(pos: Vector2) {
+    this.x = pos.x - this.size / 2
+    this.y = pos.y - this.size / 2
   }
 }

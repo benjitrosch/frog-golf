@@ -1,4 +1,4 @@
-import Actor from '../Actor'
+import Actor, { Direction } from '../Actor'
 
 import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
@@ -33,23 +33,62 @@ export default class Frog extends Actor<FrogState> {
   }
 
   Load() {
-    const idleSprite = new Sprite(FrogState.IDLE, 'frog/idle.png')
-    const crouchSprite = new Sprite(FrogState.CROUCH, 'frog/crouch.png')
-    const jumpSprite = new Sprite(FrogState.JUMP, 'frog/jump.png')
-    const fallSprite = new Sprite(FrogState.FALL, 'frog/fall.png')
+    const idleLeft = new Sprite(
+      FrogState.IDLE,
+      Direction.LEFT,
+      'frog/idle_LEFT.png'
+    )
+    const idleRight = new Sprite(
+      FrogState.IDLE,
+      Direction.RIGHT,
+      'frog/idle_RIGHT.png'
+    )
+
+    const crouchLeft = new Sprite(
+      FrogState.CROUCH,
+      Direction.LEFT,
+      'frog/crouch_LEFT.png'
+    )
+    const crouchRight = new Sprite(
+      FrogState.CROUCH,
+      Direction.RIGHT,
+      'frog/crouch_RIGHT.png'
+    )
+
+    const jumpLeft = new Sprite(
+      FrogState.JUMP,
+      Direction.LEFT,
+      'frog/jump_LEFT.png'
+    )
+    const jumpRight = new Sprite(
+      FrogState.JUMP,
+      Direction.RIGHT,
+      'frog/jump_RIGHT.png'
+    )
+
+    const fallLeft = new Sprite(
+      FrogState.FALL,
+      Direction.LEFT,
+      'frog/fall_LEFT.png'
+    )
+    const fallRight = new Sprite(
+      FrogState.FALL,
+      Direction.RIGHT,
+      'frog/fall_RIGHT.png'
+    )
+
     // const defeatSprite = new Sprite('frog/defeat.png')
 
-    this.sprites = [
-      idleSprite,
-      crouchSprite,
-      jumpSprite,
-      fallSprite,
-      // defeatSprite,
-    ]
+    this.spritesLeft = [idleLeft, crouchLeft, jumpLeft, fallLeft]
+    this.spritesRight = [idleRight, crouchRight, jumpRight, fallRight]
   }
 
   Update(time: Time) {
     super.Update(time)
+
+    if (this.vy < 0) {
+      this.setState(FrogState.FALL)
+    }
   }
 
   Draw(render2D: RenderContext2D, time: Time) {
@@ -62,9 +101,22 @@ export default class Frog extends Actor<FrogState> {
       this.size,
       this.size
     )
+
+    render2D.drawBlock(
+      this.x - 10,
+      this.y + 50 - GAME_HEIGHT * this.level.index,
+      Math.trunc(this.jumpGauge * 50),
+      4
+    )
   }
 
   getDrawImage() {
-    return this.sprites.find((sprite) => sprite.state === this.state)
+    return (this.direction === -1 ? this.spritesLeft : this.spritesRight).find(
+      (sprite) => sprite.state === this.state
+    )
+  }
+
+  collideToBottom(w) {
+    super.collideToBottom(w, () => this.setState(FrogState.IDLE))
   }
 }

@@ -17,8 +17,8 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
     this.keys = { ArrowLeft: false, ArrowRight: false, ' ': false }
 
-    // document.onkeydown = this.keyDown
-    // document.onkeyup = this.keyUp
+    document.onkeydown = (e) => this.keyDown(e)
+    document.onkeyup = (e) => this.keyUp(e)
   }
 
   Update(time: Time) {
@@ -55,6 +55,10 @@ export default class PlayableFrog extends Frog implements IPlayable {
         if (this.keys.ArrowLeft) this.vx = -SIDE_JUMP_HEIGHT
         else if (this.keys.ArrowRight) this.vx = SIDE_JUMP_HEIGHT
 
+        if (this.keys.ArrowLeft || this.keys.ArrowRight) {
+          this.direction = Math.sign(this.vx)
+        }
+
         this.vy = this.jumpGauge * JUMP_HEIGHT
         this.jumpGauge = 0
 
@@ -68,7 +72,6 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
   keyDown(e: KeyboardEvent) {
     this.keys[e.key] = true
-    console.log(this.keys)
   }
 
   keyUp(e: KeyboardEvent) {
