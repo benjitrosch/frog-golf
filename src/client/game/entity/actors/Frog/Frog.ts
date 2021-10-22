@@ -3,6 +3,7 @@ import Actor, { Direction } from '../Actor'
 import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
 import Sprite from '../../Sprite'
+import Debug from '../../../system/Debug'
 
 import { levels } from '../../../world/Map'
 import { GAME_HEIGHT } from '../../../Constants'
@@ -110,7 +111,7 @@ export default class Frog extends Actor<FrogState> {
       4
     )
 
-    render2D.drawAABB(this.aabb)
+    if (Debug.Instance.enabled) render2D.drawAABB(this.aabb)
     render2D.text('i am fwog', this.x, this.y, this.level.index)
   }
 

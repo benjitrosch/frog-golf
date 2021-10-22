@@ -2,6 +2,7 @@ import Frog, { FrogState } from './Frog'
 import IPlayable, { ArrowKey } from '../IPlayable'
 
 import Time from '../../../system/Time'
+import Debug from '../../../system/Debug'
 
 import {
   JUMP_CHARGE_SPEED,
@@ -72,6 +73,11 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
   keyDown(e: KeyboardEvent) {
     this.keys[e.key] = true
+
+    // Enable/disable debug mode
+    if (e.key === '`') {
+      Debug.Instance.toggleDebug()
+    }
   }
 
   keyUp(e: KeyboardEvent) {
