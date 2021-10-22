@@ -25,13 +25,18 @@ const Play = (): JSX.Element => {
         height: '100%',
       }}
     >
-      <span className="text-shadow text-4xl" style={titleStyle}>
+      <span className="text-shadow text-4xl text-center" style={titleStyle}>
         FROG GOLF
       </span>
-      <span className="text-shadow text-2xl" style={titleStyle}>
+      <span
+        className="text-shadow text-md text-center max-w-xs"
+        style={titleStyle}
+      >
         "{slogan.current}"
       </span>
+
       <Game />
+
       <div>
         <button>{'<'}</button>
         <button>{'>'}</button>

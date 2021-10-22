@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'gameboy';
+  src: url('../assets/font/gameboyfont/early_gameboy-webfont.woff2')
+      format('woff2'),
+    url('../assets/font/gameboyfont/early_gameboy-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  overflow: hidden;
+  background: linear-gradient(#86c06c, #306850);
+}

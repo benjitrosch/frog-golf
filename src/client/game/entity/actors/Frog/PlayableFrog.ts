@@ -73,6 +73,7 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
         this.setState(FrogState.JUMP)
         this.onGround = false
+        this.soundFX.jump.play()
 
         this.totalJumps++
       }

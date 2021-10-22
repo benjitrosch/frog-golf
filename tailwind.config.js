@@ -9,6 +9,9 @@ module.exports = {
         shadow: '#306850',
         mid: '#86c06c',
       },
+      fontFamily: {
+        sans: ['gameboy'],
+      },
     },
   },
   variants: {

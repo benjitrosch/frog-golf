@@ -64,7 +64,7 @@ const Game = (): JSX.Element => {
       ref={canvasRef}
       width={GAME_WIDTH}
       height={GAME_HEIGHT}
-      className="bg-mid border-shadow border-8"
+      className="bg-mid border-shadow border-8 rounded-2xl"
       // style={{ imageRendering: 'pixelated' }}
     />
   )

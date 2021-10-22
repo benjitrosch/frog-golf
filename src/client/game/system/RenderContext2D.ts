@@ -1,6 +1,6 @@
 import Canvas from './Canvas'
 
-import { GAME_HEIGHT, GAME_WIDTH } from '../Constants'
+import { GAME_HEIGHT, GAME_UNIT_SIZE, GAME_WIDTH } from '../Constants'
 import Color from '../../utils/Color'
 import { invertedYCoord } from '../../utils/WorldCoordinates'
 
@@ -55,7 +55,7 @@ export default class RenderContext2D {
     levelIndex = 0,
     color = Color.Black,
     align = TextAlign.Center,
-    size = 32,
+    size = GAME_UNIT_SIZE,
     font?
   ) {
     this.graphics.save()

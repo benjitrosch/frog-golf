@@ -3,10 +3,10 @@ import Actor, { Direction } from '../Actor'
 import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
 import Sprite from '../../Sprite'
-import Debug from '../../../system/Debug'
+import SoundFX from '../../SoundFX'
 
 import { levels } from '../../../world/Map'
-import { GAME_HEIGHT } from '../../../Constants'
+import { GAME_UNIT_SIZE } from '../../../Constants'
 import { invertedYCoord } from '../../../../utils/WorldCoordinates'
 
 export enum FrogState {
@@ -25,7 +25,7 @@ export default class Frog extends Actor<FrogState> {
   public secondsPlayed: number
 
   constructor(x, y) {
-    super(x, y, 32)
+    super(x, y, GAME_UNIT_SIZE)
 
     this.state = FrogState.IDLE
     this.jumpGauge = 0
@@ -35,54 +35,62 @@ export default class Frog extends Actor<FrogState> {
   }
 
   Load() {
+    // Frog Sprites
     const idleLeft = new Sprite(
       FrogState.IDLE,
       Direction.LEFT,
-      'frog/idle_LEFT.png'
+      'frog/sprites/idle_LEFT.png'
     )
     const idleRight = new Sprite(
       FrogState.IDLE,
       Direction.RIGHT,
-      'frog/idle_RIGHT.png'
+      'frog/sprites/idle_RIGHT.png'
     )
 
     const crouchLeft = new Sprite(
       FrogState.CROUCH,
       Direction.LEFT,
-      'frog/crouch_LEFT.png'
+      'frog/sprites/crouch_LEFT.png'
     )
     const crouchRight = new Sprite(
       FrogState.CROUCH,
       Direction.RIGHT,
-      'frog/crouch_RIGHT.png'
+      'frog/sprites/crouch_RIGHT.png'
     )
 
     const jumpLeft = new Sprite(
       FrogState.JUMP,
       Direction.LEFT,
-      'frog/jump_LEFT.png'
+      'frog/sprites/jump_LEFT.png'
     )
     const jumpRight = new Sprite(
       FrogState.JUMP,
       Direction.RIGHT,
-      'frog/jump_RIGHT.png'
+      'frog/sprites/jump_RIGHT.png'
     )
 
     const fallLeft = new Sprite(
       FrogState.FALL,
       Direction.LEFT,
-      'frog/fall_LEFT.png'
+      'frog/sprites/fall_LEFT.png'
     )
     const fallRight = new Sprite(
       FrogState.FALL,
       Direction.RIGHT,
-      'frog/fall_RIGHT.png'
+      'frog/sprites/fall_RIGHT.png'
     )
 
     // const defeatSprite = new Sprite('frog/defeat.png')
 
     this.spritesLeft = [idleLeft, crouchLeft, jumpLeft, fallLeft]
     this.spritesRight = [idleRight, crouchRight, jumpRight, fallRight]
+
+    // Frog SoundFX
+    this.soundFX = {
+      jump: new SoundFX('jump', 'frog/sounds/jump.wav'),
+      bounce: new SoundFX('bounce', 'frog/sounds/bounce.wav'),
+      land: new SoundFX('land', 'frog/sounds/land.wav'),
+    }
   }
 
   Update(time: Time) {
@@ -111,7 +119,28 @@ export default class Frog extends Actor<FrogState> {
     )
   }
 
+  collideToLeft(w) {
+    super.collideToLeft(w, () => {
+      this.soundFX.bounce.play()
+    })
+  }
+
+  collideToRight(w) {
+    super.collideToRight(w, () => {
+      this.soundFX.bounce.play()
+    })
+  }
+
+  collideToTop(w) {
+    super.collideToTop(w, () => {
+      this.soundFX.bounce.play()
+    })
+  }
+
   collideToBottom(w) {
-    super.collideToBottom(w, () => this.setState(FrogState.IDLE))
+    super.collideToBottom(w, () => {
+      this.setState(FrogState.IDLE)
+      this.soundFX.land.play()
+    })
   }
 }

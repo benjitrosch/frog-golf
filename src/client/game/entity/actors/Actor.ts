@@ -3,6 +3,7 @@ import Entity from '../Entity'
 import Vector2 from '../components/Vector2'
 import AABB from '../components/AABB'
 import Sprite from '../Sprite'
+import SoundFX from '../SoundFX'
 import Level from '../../world/Level'
 
 import RenderContext2D from '../../system/RenderContext2D'
@@ -62,6 +63,7 @@ export default abstract class Actor<S> extends Entity {
   public state: S
   protected spritesLeft: Sprite<S>[]
   protected spritesRight: Sprite<S>[]
+  protected soundFX: Record<string, SoundFX>
 
   public level: Level
 
