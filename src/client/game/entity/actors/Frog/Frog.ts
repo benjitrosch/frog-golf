@@ -1,9 +1,10 @@
-import Actor from './Actor'
+import Actor from '../Actor'
 
-import RenderContext2D from '../../system/RenderContext2D'
+import RenderContext2D from '../../../system/RenderContext2D'
+import Time from '../../../system/Time'
 
-import { levels } from '../../world/Map'
-import { GAME_HEIGHT } from '../../Constants'
+import { levels } from '../../../world/Map'
+import { GAME_HEIGHT } from '../../../Constants'
 
 export enum FrogState {
   IDLE = 'idle',
@@ -30,17 +31,15 @@ export default class Frog extends Actor<FrogState> {
     this.levelMax = 0
   }
 
-  update(deltaTime: number) {
-    super.update(deltaTime)
+  Update(time: Time) {
+    super.Update(time)
   }
 
-  draw(render2D: RenderContext2D, deltaTime: number) {
-    super.draw(render2D, deltaTime)
-
+  Draw(render2D: RenderContext2D, time: Time) {
     const { graphics } = render2D
 
     graphics.drawImage(
-      images[this.getDrawImage()],
+      this.sprites[this.getDrawImage()?.filePath],
       this.x,
       GAME_HEIGHT - this.size - this.y + this.level.index * GAME_HEIGHT,
       this.size,
@@ -59,6 +58,10 @@ export default class Frog extends Actor<FrogState> {
   }
 
   getDrawImage() {
-    return this.state + (this.direction === -1 ? 'L' : '')
+    return this.sprites.find(
+      (sprite) =>
+        sprite.filePath ===
+        this.state + (this.direction === -1 ? '_LEFT' : '_RIGHT')
+    )
   }
 }

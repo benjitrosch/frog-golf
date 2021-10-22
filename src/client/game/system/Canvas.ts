@@ -1,22 +1,30 @@
+type CanvasConstructorParameter = string | HTMLCanvasElement
+
 export default class Canvas {
   public canvas: HTMLCanvasElement
 
-  constructor(elementId: string) {
-    const canvas = document.getElementById(elementId)
+  constructor(element: CanvasConstructorParameter) {
+    if (typeof element === 'string') {
+      const canvas = document.getElementById(element)
 
-    if (canvas == null) {
-      throw new Error(
-        `Could not find element of id ${elementId} in the document`
-      )
+      if (canvas == null) {
+        throw new Error(
+          `Could not find element of id ${element} in the document`
+        )
+      }
+
+      if (!(canvas instanceof HTMLCanvasElement)) {
+        throw new Error(
+          `The element of id "${element}" is not a HTMLCanvasElement`
+        )
+      }
+
+      this.canvas = canvas
     }
 
-    if (!(canvas instanceof HTMLCanvasElement)) {
-      throw new Error(
-        `The element of id "${elementId}" is not a HTMLCanvasElement`
-      )
+    if (element instanceof HTMLCanvasElement) {
+      this.canvas = element
     }
-
-    this.canvas = canvas
   }
 
   getContext2D() {

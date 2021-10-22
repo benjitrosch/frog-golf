@@ -8,3 +8,5 @@ export const BOUND_FRICTION = 0.66
 export const SIDE_JUMP_HEIGHT = 5
 export const JUMP_HEIGHT = 15
 export const JUMP_CHARGE_SPEED = 600
+
+export const FRAMERATE = 1000 / 144

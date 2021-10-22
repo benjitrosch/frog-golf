@@ -1,11 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import Game from './Game'
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <>
       <Switch>
-        <Route exact path="/"></Route>
+        <Route exact path="/" component={Game} />
       </Switch>
     </>
   )

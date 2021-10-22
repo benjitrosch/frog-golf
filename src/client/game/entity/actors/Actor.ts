@@ -6,6 +6,7 @@ import Sprite from '../Sprite'
 import Level from '../../world/Level'
 
 import RenderContext2D from '../../system/RenderContext2D'
+import Time from '../../system/Time'
 
 import {
   BOUND_FRICTION,
@@ -32,7 +33,7 @@ type CollisionResponse = {
   set: number
 }
 
-export default class Actor<S> extends Entity {
+export default abstract class Actor<S> extends Entity {
   protected x: number
   protected y: number
   public get position() {
@@ -87,11 +88,11 @@ export default class Actor<S> extends Entity {
     }
   }
 
-  load() {
+  Load() {
     throw new Error('Load not implemented')
   }
 
-  update(deltaTime: number) {
+  Update(time: Time) {
     //Apply previous acceleration
     this.vx *= LINEAR_DRAG
     this.vy *= LINEAR_DRAG
@@ -115,9 +116,9 @@ export default class Actor<S> extends Entity {
     }
   }
 
-  draw(render2D: RenderContext2D, deltaTime: number) {
-    throw new Error('Draw not implemented')
-  }
+  abstract Draw(render2D: RenderContext2D, time: Time)
+
+  abstract getDrawImage(): Sprite
 
   setState(state: S) {
     if (this.state !== state) {

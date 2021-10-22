@@ -2,9 +2,11 @@ import {
   JUMP_CHARGE_SPEED,
   JUMP_HEIGHT,
   SIDE_JUMP_HEIGHT,
-} from '../../Constants'
+} from '../../../Constants'
 import Frog, { FrogState } from './Frog'
-import IPlayable, { ArrowKey } from './IPlayable'
+import IPlayable, { ArrowKey } from '../IPlayable'
+
+import Time from '../../../system/Time'
 
 export default class PlayableFrog extends Frog implements IPlayable {
   keys: Record<ArrowKey, boolean>
@@ -16,8 +18,8 @@ export default class PlayableFrog extends Frog implements IPlayable {
     document.onkeyup = this.keyUp
   }
 
-  update(deltaTime: number) {
-    super.update(deltaTime)
+  Update(time: Time) {
+    super.Update(time)
 
     if (this.onGround) {
       // Space down and not crouching
@@ -32,7 +34,7 @@ export default class PlayableFrog extends Frog implements IPlayable {
       ) {
         this.jumpGauge >= 1
           ? (this.jumpGauge = 1)
-          : (this.jumpGauge += deltaTime / JUMP_CHARGE_SPEED)
+          : (this.jumpGauge += time.deltaTime / JUMP_CHARGE_SPEED)
       }
       // Space up and crouching
       // or
