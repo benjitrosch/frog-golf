@@ -8,8 +8,7 @@ import EntityManager from '../game/entity/EntityManager'
 
 import PlayableFrog from '../game/entity/actors/Frog/PlayableFrog'
 
-import { FRAMERATE, GAME_HEIGHT, GAME_WIDTH } from '../game/Constants'
-import Color from '../utils/Color'
+import { FRAMERATE, GAME_WIDTH, GAME_HEIGHT } from '../game/Constants'
 
 const entityManager = new EntityManager()
 
@@ -62,13 +61,9 @@ const Game = (): JSX.Element => {
   return (
     <canvas
       ref={canvasRef}
-      id="cvs"
-      width={320}
-      height={640}
-      style={{
-        border: `4px solid ${Color.Shadow}`,
-        background: Color.Midtone,
-      }}
+      width={GAME_WIDTH}
+      height={GAME_HEIGHT}
+      className="bg-mid border-shadow border-4"
     />
   )
 }

@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import App from './App'
 
-import './styles/global.scss'
+import './styles/styles.css'
 
 ReactDOM.render(
   <Router>
