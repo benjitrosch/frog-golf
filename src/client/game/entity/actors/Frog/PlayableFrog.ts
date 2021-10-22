@@ -1,25 +1,33 @@
 import Frog, { FrogState } from './Frog'
 import IPlayable, { ArrowKey } from '../IPlayable'
 
+import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
 import Debug from '../../../system/Debug'
 
 import {
+  GAME_HEIGHT,
+  GAME_WIDTH,
   JUMP_CHARGE_SPEED,
   JUMP_HEIGHT,
   SIDE_JUMP_HEIGHT,
 } from '../../../Constants'
 
 export default class PlayableFrog extends Frog implements IPlayable {
+  private static _instance: PlayableFrog
   public keys: Record<ArrowKey, boolean>
 
-  constructor(x, y) {
-    super(x, y)
+  private constructor() {
+    super(GAME_WIDTH / 2, 0)
 
     this.keys = { ArrowLeft: false, ArrowRight: false, ' ': false }
 
     document.onkeydown = (e) => this.keyDown(e)
     document.onkeyup = (e) => this.keyUp(e)
+  }
+
+  public static get Instance() {
+    return this._instance || (this._instance = new this())
   }
 
   Update(time: Time) {
@@ -69,6 +77,19 @@ export default class PlayableFrog extends Frog implements IPlayable {
         this.totalJumps++
       }
     }
+  }
+
+  Draw(render2D: RenderContext2D, time: Time) {
+    super.Draw(render2D, time)
+
+    render2D.rectangle(
+      this.x - 8,
+      this.y + 32 - GAME_HEIGHT * this.level.index,
+      Math.trunc(this.jumpGauge * 50),
+      4
+    )
+
+    if (Debug.Instance.enabled) render2D.drawAABB(this.aabb)
   }
 
   keyDown(e: KeyboardEvent) {

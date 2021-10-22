@@ -67,7 +67,7 @@ export default class RenderContext2D {
     this.fontSize(this.graphics.font, size)
 
     this.graphics.textAlign = align as CanvasTextAlign
-    this.graphics.strokeStyle = color
+    this.graphics.fillStyle = color
     this.graphics.fillText(text, x, invertedYCoord(y, levelIndex, size))
 
     this.graphics.restore()

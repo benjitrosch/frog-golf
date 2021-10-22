@@ -1,3 +1,12 @@
+import Color from '../../utils/Color'
+import { vector2ToString } from '../../utils/string'
+import { GAME_HEIGHT, GAME_WIDTH } from '../Constants'
+import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
+import RenderContext2D, { TextAlign } from './RenderContext2D'
+import Time from './Time'
+
+const LINE_HEIGHT = 16
+
 export default class Debug {
   private static _instance: Debug
 
@@ -11,7 +20,123 @@ export default class Debug {
     return this._instance || (this._instance = new this())
   }
 
-  public toggleDebug() {
+  toggleDebug() {
     this.enabled = !this.enabled
+  }
+
+  Draw(render2D: RenderContext2D, time: Time) {
+    if (!this.enabled) {
+      return
+    }
+
+    // build
+    render2D.text(
+      'release alpha 0.0.1',
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 2,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // ticks per second
+    render2D.text(
+      `${Math.trunc(time.unscaledTime)} tps`,
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 3,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // spacer
+    render2D.text(
+      '---',
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 4,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // player current level
+    render2D.text(
+      `level: ${PlayableFrog.Instance.level.index}`,
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 5,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // player position
+    render2D.text(
+      vector2ToString(PlayableFrog.Instance.position, 'pos'),
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 6,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // player velocity
+    render2D.text(
+      vector2ToString(PlayableFrog.Instance.velocity, 'vel'),
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 7,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // player jump gauge
+    render2D.text(
+      `jump power: ${Math.round(PlayableFrog.Instance.jumpGauge * 100)} / 100`,
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 8,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // spacer
+    render2D.text(
+      '---',
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 9,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // player socket id
+    render2D.text(
+      'uid: ##########',
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 10,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
+
+    // player display name
+    render2D.text(
+      'display: "abcdefg123"',
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 11,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14
+    )
   }
 }

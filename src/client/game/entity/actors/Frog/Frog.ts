@@ -18,7 +18,7 @@ export enum FrogState {
 }
 
 export default class Frog extends Actor<FrogState> {
-  protected jumpGauge: number
+  public jumpGauge: number
 
   public levelMax: number
   public totalJumps: number
@@ -103,16 +103,6 @@ export default class Frog extends Actor<FrogState> {
       this.size,
       this.size
     )
-
-    render2D.rectangle(
-      this.x - 10,
-      this.y + 50 - GAME_HEIGHT * this.level.index,
-      Math.trunc(this.jumpGauge * 50),
-      4
-    )
-
-    if (Debug.Instance.enabled) render2D.drawAABB(this.aabb)
-    render2D.text('i am fwog', this.x, this.y, this.level.index)
   }
 
   getDrawImage() {
