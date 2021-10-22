@@ -6,6 +6,7 @@ import Sprite from '../../Sprite'
 
 import { levels } from '../../../world/Map'
 import { GAME_HEIGHT } from '../../../Constants'
+import { invertedYCoord } from '../../../../utils/WorldCoordinates'
 
 export enum FrogState {
   IDLE = 'idle',
@@ -97,17 +98,20 @@ export default class Frog extends Actor<FrogState> {
     graphics.drawImage(
       this.getDrawImage().image,
       this.x,
-      GAME_HEIGHT - this.size - this.y + this.level.index * GAME_HEIGHT,
+      invertedYCoord(this.y, this.level.index, this.size),
       this.size,
       this.size
     )
 
-    render2D.drawBlock(
+    render2D.rectangle(
       this.x - 10,
       this.y + 50 - GAME_HEIGHT * this.level.index,
       Math.trunc(this.jumpGauge * 50),
       4
     )
+
+    render2D.drawAABB(this.aabb)
+    render2D.text('i am fwog', this.x, this.y, this.level.index)
   }
 
   getDrawImage() {

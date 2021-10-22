@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useEffect } from 'react'
 
-import Time from './game/system/Time'
-import Canvas from './game/system/Canvas'
-import RenderContext2D from './game/system/RenderContext2D'
-import EntityManager from './game/entity/EntityManager'
+import Time from '../game/system/Time'
+import Canvas from '../game/system/Canvas'
+import RenderContext2D from '../game/system/RenderContext2D'
+import EntityManager from '../game/entity/EntityManager'
 
-import { FRAMERATE, GAME_HEIGHT, GAME_WIDTH } from './game/Constants'
+import PlayableFrog from '../game/entity/actors/Frog/PlayableFrog'
 
-import PlayableFrog from './game/entity/actors/Frog/PlayableFrog'
+import { FRAMERATE, GAME_HEIGHT, GAME_WIDTH } from '../game/Constants'
+import Color from '../utils/Color'
 
 const entityManager = new EntityManager()
 
@@ -51,30 +52,24 @@ const Game = (): JSX.Element => {
   }
 
   const Draw = (render2D: RenderContext2D, time: Time) => {
-    const { graphics } = render2D
-
-    graphics.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+    render2D.clearScreen()
 
     entityManager.Draw(render2D, time)
+
+    render2D.text('test text!!!', GAME_WIDTH / 2, 100)
   }
 
   return (
-    <div
+    <canvas
+      ref={canvasRef}
+      id="cvs"
+      width={320}
+      height={640}
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
+        border: `4px solid ${Color.Shadow}`,
+        background: Color.Midtone,
       }}
-    >
-      <canvas
-        ref={canvasRef}
-        id="cvs"
-        width={320}
-        height={640}
-        style={{ border: '1px solid red' }}
-      />
-    </div>
+    />
   )
 }
 
