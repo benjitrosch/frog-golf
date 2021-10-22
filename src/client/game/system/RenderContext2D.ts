@@ -1,7 +1,8 @@
 import Canvas from './Canvas'
 
-import { GAME_HEIGHT, GAME_UNIT_SIZE, GAME_WIDTH } from '../Constants'
 import Color from '../../utils/Color'
+import Fonts from '../../utils/fonts'
+import { GAME_HEIGHT, GAME_UNIT_SIZE, GAME_WIDTH } from '../Constants'
 import { invertedYCoord } from '../../utils/WorldCoordinates'
 
 export enum TextAlign {
@@ -56,7 +57,7 @@ export default class RenderContext2D {
     color = Color.Black,
     align = TextAlign.Center,
     size = GAME_UNIT_SIZE,
-    font?
+    font = Fonts.Gameboy
   ) {
     this.graphics.save()
 

@@ -1,9 +1,12 @@
-import Color from '../../utils/Color'
-import { vector2ToString } from '../../utils/string'
-import { GAME_HEIGHT, GAME_WIDTH } from '../Constants'
 import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
+
 import RenderContext2D, { TextAlign } from './RenderContext2D'
 import Time from './Time'
+
+import Color from '../../utils/Color'
+import Fonts from '../../utils/fonts'
+import { vector2ToString } from '../../utils/string'
+import { GAME_HEIGHT, GAME_WIDTH } from '../Constants'
 
 const LINE_HEIGHT = 16
 
@@ -37,7 +40,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // ticks per second
@@ -48,7 +52,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // spacer
@@ -59,7 +64,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // player current level
@@ -70,7 +76,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // player position
@@ -81,7 +88,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // player velocity
@@ -92,7 +100,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // player jump gauge
@@ -103,7 +112,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // spacer
@@ -114,7 +124,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // player socket id
@@ -125,7 +136,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
 
     // player display name
@@ -136,7 +148,8 @@ export default class Debug {
       0,
       Color.White,
       TextAlign.Right,
-      14
+      14,
+      Fonts.Rainyhearts
     )
   }
 }

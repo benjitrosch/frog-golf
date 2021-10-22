@@ -8,14 +8,16 @@ import Level from '../../world/Level'
 
 import RenderContext2D from '../../system/RenderContext2D'
 import Time from '../../system/Time'
+import Map from '../../world/Map'
 
 import {
   BOUND_FRICTION,
+  GAME_HEIGHT,
   GAME_WIDTH,
   GRAVITY,
   LINEAR_DRAG,
 } from '../../Constants'
-import { blocks } from '../../world/Map'
+import { heightToLevel } from '../../../utils/WorldCoordinates'
 
 export enum Direction {
   LEFT = -1,
@@ -105,6 +107,12 @@ export default abstract class Actor<S> extends Entity {
     this.x += this.vx
     this.y += this.vy
 
+    // Set level to total height / screen height,
+    // max out at total # levels
+    if (heightToLevel(this.y) <= Map.Instance.numLevels) {
+      this.level = Map.Instance.levels[heightToLevel(this.y)]
+    }
+
     //Apply gravity
     if (this.testCollide(0, -GRAVITY).side == undefined) {
       this.vy -= GRAVITY
@@ -145,8 +153,14 @@ export default abstract class Actor<S> extends Entity {
     } else if (box.y < 0) {
       side = CollisionDirection.BOTTOM
       set = 0
+    } else if (
+      box.y > GAME_HEIGHT &&
+      heightToLevel(this.y) > Map.Instance.numLevels
+    ) {
+      side = CollisionDirection.TOP
+      set = this.y
     } else {
-      for (const b of blocks) {
+      for (const b of this.level.blocks) {
         if (b.level != this.level) continue
 
         const aabb = b.convert()

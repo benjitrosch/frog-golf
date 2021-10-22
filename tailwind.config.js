@@ -10,7 +10,7 @@ module.exports = {
         mid: '#86c06c',
       },
       fontFamily: {
-        sans: ['gameboy'],
+        sans: ['gameboy', 'rainyhearts', 'minecraftia'],
       },
     },
   },

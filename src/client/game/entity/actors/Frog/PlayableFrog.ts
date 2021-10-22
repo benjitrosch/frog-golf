@@ -90,7 +90,9 @@ export default class PlayableFrog extends Frog implements IPlayable {
       4
     )
 
-    if (Debug.Instance.enabled) render2D.drawAABB(this.aabb)
+    if (Debug.Instance.enabled) {
+      render2D.drawAABB(this.aabb)
+    }
   }
 
   keyDown(e: KeyboardEvent) {

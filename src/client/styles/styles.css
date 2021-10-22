@@ -11,6 +11,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'rainyhearts';
+  src: url('../assets/font/rainyhearts/rainyhearts.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'minecraftia';
+  src: url('../assets/font/minecraftia/Minecraftia-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   overflow: hidden;

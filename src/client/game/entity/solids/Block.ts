@@ -2,11 +2,14 @@ import Solid from './Solid'
 
 import AABB from '../components/AABB'
 
-import { GAME_HEIGHT } from '../../Constants'
 import RenderContext2D from '../../system/RenderContext2D'
 import Time from '../../system/Time'
+import Debug from '../../system/Debug'
 
-export default class Ground extends Solid {
+import Color from '../../../utils/Color'
+import { GAME_HEIGHT } from '../../Constants'
+
+export default class Block extends Solid {
   constructor(level, aabb) {
     super(level, aabb)
   }
@@ -21,12 +24,24 @@ export default class Ground extends Solid {
   }
 
   public Load() {
-    throw new Error('Method not implemented.')
+    // throw new Error('Method not implemented.')
   }
+
   public Update(time: Time) {
-    throw new Error('Method not implemented.')
+    // throw new Error('Method not implemented.')
   }
+
   public Draw(render2D: RenderContext2D, time: Time) {
-    throw new Error('Method not implemented.')
+    render2D.rectangle(
+      this.aabb.x,
+      this.aabb.y,
+      this.aabb.width,
+      this.aabb.height,
+      Color.Shadow
+    )
+
+    if (Debug.Instance.enabled) {
+      render2D.drawAABB(this.aabb)
+    }
   }
 }

@@ -4,8 +4,8 @@ import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
 import Sprite from '../../Sprite'
 import SoundFX from '../../SoundFX'
+import Map from '../../../world/Map'
 
-import { levels } from '../../../world/Map'
 import { GAME_UNIT_SIZE } from '../../../Constants'
 import { invertedYCoord } from '../../../../utils/WorldCoordinates'
 
@@ -30,7 +30,7 @@ export default class Frog extends Actor<FrogState> {
     this.state = FrogState.IDLE
     this.jumpGauge = 0
 
-    this.level = levels[0]
+    this.level = Map.Instance.levels[0]
     this.levelMax = 0
   }
 
@@ -99,6 +99,8 @@ export default class Frog extends Actor<FrogState> {
     if (this.vy < 0) {
       this.setState(FrogState.FALL)
     }
+
+    this.levelMax = Math.max(this.level.index, this.levelMax)
   }
 
   Draw(render2D: RenderContext2D, time: Time) {
