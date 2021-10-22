@@ -7,7 +7,8 @@ import RenderContext2D from './game/system/RenderContext2D'
 import EntityManager from './game/entity/EntityManager'
 
 import { FRAMERATE } from './game/Constants'
-import Frog from './game/entity/actors/Frog/Frog'
+
+import PlayableFrog from './game/entity/actors/Frog/PlayableFrog'
 
 const entityManager = new EntityManager()
 
@@ -24,7 +25,9 @@ const Game = (): JSX.Element => {
     }
   }, [])
 
-  const Initialize = () => {}
+  const Initialize = () => {
+    entityManager.AddEntity(new PlayableFrog(0, 0))
+  }
 
   const Run = (render2D: RenderContext2D, time: Time) => {
     time.currentTime = new Date().getTime()

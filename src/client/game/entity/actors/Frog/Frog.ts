@@ -2,6 +2,7 @@ import Actor from '../Actor'
 
 import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
+import Sprite from '../../Sprite'
 
 import { levels } from '../../../world/Map'
 import { GAME_HEIGHT } from '../../../Constants'
@@ -31,6 +32,22 @@ export default class Frog extends Actor<FrogState> {
     this.levelMax = 0
   }
 
+  Load() {
+    const idleSprite = new Sprite(FrogState.IDLE, 'frog/idle.png')
+    const crouchSprite = new Sprite(FrogState.CROUCH, 'frog/crouch.png')
+    const jumpSprite = new Sprite(FrogState.JUMP, 'frog/jump.png')
+    const fallSprite = new Sprite(FrogState.FALL, 'frog/fall.png')
+    // const defeatSprite = new Sprite('frog/defeat.png')
+
+    this.sprites = [
+      idleSprite,
+      crouchSprite,
+      jumpSprite,
+      fallSprite,
+      // defeatSprite,
+    ]
+  }
+
   Update(time: Time) {
     super.Update(time)
   }
@@ -39,29 +56,15 @@ export default class Frog extends Actor<FrogState> {
     const { graphics } = render2D
 
     graphics.drawImage(
-      this.sprites[this.getDrawImage()?.filePath],
+      this.getDrawImage().image,
       this.x,
       GAME_HEIGHT - this.size - this.y + this.level.index * GAME_HEIGHT,
       this.size,
       this.size
     )
-
-    graphics.beginPath()
-    graphics.rect(941, GAME_HEIGHT - 779, 52, -14)
-    graphics.stroke()
-    render2D.drawBlock(
-      this.x - 10,
-      this.y + 50 - GAME_HEIGHT * this.level.index,
-      Math.trunc(this.jumpGauge * 50),
-      8
-    )
   }
 
   getDrawImage() {
-    return this.sprites.find(
-      (sprite) =>
-        sprite.filePath ===
-        this.state + (this.direction === -1 ? '_LEFT' : '_RIGHT')
-    )
+    return this.sprites.find((sprite) => sprite.state === this.state)
   }
 }

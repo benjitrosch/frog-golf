@@ -1,21 +1,24 @@
-import {
-  JUMP_CHARGE_SPEED,
-  JUMP_HEIGHT,
-  SIDE_JUMP_HEIGHT,
-} from '../../../Constants'
 import Frog, { FrogState } from './Frog'
 import IPlayable, { ArrowKey } from '../IPlayable'
 
 import Time from '../../../system/Time'
 
+import {
+  JUMP_CHARGE_SPEED,
+  JUMP_HEIGHT,
+  SIDE_JUMP_HEIGHT,
+} from '../../../Constants'
+
 export default class PlayableFrog extends Frog implements IPlayable {
-  keys: Record<ArrowKey, boolean>
+  public keys: Record<ArrowKey, boolean>
 
   constructor(x, y) {
     super(x, y)
 
-    document.onkeydown = this.keyDown
-    document.onkeyup = this.keyUp
+    this.keys = { ArrowLeft: false, ArrowRight: false, ' ': false }
+
+    // document.onkeydown = this.keyDown
+    // document.onkeyup = this.keyUp
   }
 
   Update(time: Time) {
@@ -65,6 +68,7 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
   keyDown(e: KeyboardEvent) {
     this.keys[e.key] = true
+    console.log(this.keys)
   }
 
   keyUp(e: KeyboardEvent) {

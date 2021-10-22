@@ -19,13 +19,13 @@ export default class EntityManager {
   Update(time: Time) {
     this.entities.forEach((entity) => entity.Update(time))
 
-    this.entities = this.entities.filter((entity) =>
-      this.removeQueue.map((r) => r.uuid).includes(entity.uuid)
+    this.entities = this.entities.filter(
+      (entity) => !this.removeQueue.map((r) => r.uuid).includes(entity.uuid)
     )
     this.removeQueue = []
 
     this.addQueue.forEach((entity) => entity.Load())
-    this.entities.concat(this.addQueue)
+    this.entities = this.entities.concat(this.addQueue)
     this.addQueue = []
   }
 
