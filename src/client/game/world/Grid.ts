@@ -1,17 +1,28 @@
+import Tile from './Tile'
+import Level from './Level'
+
 import RenderContext2D from '../system/RenderContext2D'
 import Debug from '../system/Debug'
 
 import { GAME_HEIGHT, GAME_UNIT_SIZE, GAME_WIDTH } from '../Constants'
-import Tile from './Tile'
 import Color from '../../utils/Color'
+import Vector2 from '../entity/components/Vector2'
+import Block from '../entity/solids/Block'
+import AABB from '../entity/components/AABB'
 
 export default class Grid {
+  private level: Level
+
   public rows: number
   public columns: number
 
   public tiles: Tile[]
 
-  constructor() {
+  private lastMousPos: Vector2
+
+  constructor(level: Level) {
+    this.level = level
+
     this.rows = GAME_HEIGHT / GAME_UNIT_SIZE
     this.columns = GAME_WIDTH / GAME_UNIT_SIZE
 
@@ -22,6 +33,9 @@ export default class Grid {
       }
     }
     this.tiles = tiles
+
+    this.lastMousPos = new Vector2(0, 0)
+    document.onclick = () => this.selectTile()
   }
 
   Draw(render2D: RenderContext2D) {
@@ -31,6 +45,8 @@ export default class Grid {
         const y = Math.floor(
           (GAME_HEIGHT - render2D.canvas.mousePos.y) / GAME_UNIT_SIZE
         )
+
+        this.lastMousPos = new Vector2(x, y)
 
         this.tiles.forEach((tile) => {
           // tile.Draw(render2D)
@@ -47,5 +63,19 @@ export default class Grid {
         })
       }
     }
+  }
+
+  selectTile() {
+    this.level.addBlock(
+      new Block(
+        this.level,
+        new AABB(
+          this.lastMousPos.x,
+          this.lastMousPos.y,
+          GAME_UNIT_SIZE,
+          GAME_UNIT_SIZE
+        )
+      )
+    )
   }
 }

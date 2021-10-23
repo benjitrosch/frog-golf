@@ -45,7 +45,7 @@ export default class Level extends Asset {
     this.blocks = []
     this.walls = []
 
-    this.grid = new Grid()
+    this.grid = new Grid(this)
   }
 
   async Load(index: number) {
@@ -97,5 +97,10 @@ export default class Level extends Asset {
       12,
       Fonts.Gameboy
     )
+  }
+
+  addBlock(block: Block) {
+    console.log('added block!')
+    this.blocks = []
   }
 }

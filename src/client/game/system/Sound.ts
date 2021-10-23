@@ -4,7 +4,7 @@ export default class Sound {
   public volume: number
 
   private constructor() {
-    this.volume = 0
+    this.volume = 0.1
   }
 
   public static get Instance() {
