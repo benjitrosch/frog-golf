@@ -100,21 +100,21 @@ export default class Frog extends Actor<FrogState> {
       this.setState(FrogState.FALL)
     }
 
-    this.levelMax = Math.max(this.level.index, this.levelMax)
+    this.levelMax = Math.max(this.levelIndex, this.levelMax)
   }
 
-  Draw(render2D: RenderContext2D, time: Time) {
+  Draw(render2D: RenderContext2D) {
     const { graphics } = render2D
 
     graphics.drawImage(
       this.getDrawImage().image,
       this.x,
-      invertedYCoord(this.y, this.level.index, this.size),
+      invertedYCoord(this.y, this.levelIndex, this.size),
       this.size,
       this.size
     )
 
-    //render2D.text('test', this.x, this.y, this.level.index)
+    //render2D.text('test', this.x, this.y, this.levelIndex)
   }
 
   getDrawImage() {

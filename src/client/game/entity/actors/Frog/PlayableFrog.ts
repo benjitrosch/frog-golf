@@ -80,18 +80,18 @@ export default class PlayableFrog extends Frog implements IPlayable {
     }
   }
 
-  Draw(render2D: RenderContext2D, time: Time) {
-    super.Draw(render2D, time)
+  Draw(render2D: RenderContext2D) {
+    super.Draw(render2D)
 
     render2D.rectangle(
       this.x - 8,
-      this.y + 32 - GAME_HEIGHT * this.level.index,
+      this.y + 32 - GAME_HEIGHT * this.levelIndex,
       Math.trunc(this.jumpGauge * 50),
       4
     )
 
     if (Debug.Instance.enabled) {
-      render2D.drawAABB(this.aabb, this.level.index)
+      render2D.drawAABB(this.aabb, this.levelIndex)
     }
   }
 

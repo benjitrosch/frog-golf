@@ -1,18 +1,15 @@
-import React, { useRef } from 'react'
+import React from 'react'
 
 import Game from './components/Game'
-import { slogans } from './utils/slogans'
 
-const generateRandomSlogan = () => {
-  return slogans[Math.ceil(Math.random() * slogans.length - 1)]
-}
+// import { slogans } from './utils/slogans'
 
-const titleStyle = {
-  // textShadow: `0px 2px ${Color.Black}`,
-}
+// const generateRandomSlogan = () => {
+//   return slogans[Math.ceil(Math.random() * slogans.length - 1)]
+// }
 
 const Play = (): JSX.Element => {
-  const slogan = useRef<string>(generateRandomSlogan())
+  // const slogan = useRef<string>(generateRandomSlogan())
 
   return (
     <div className="w-full h-full flex items-center justify-center">

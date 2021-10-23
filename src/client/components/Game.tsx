@@ -38,7 +38,7 @@ const Game = (): JSX.Element => {
 
     while (time.unscaledTime >= FRAMERATE) {
       Update(time)
-      Draw(render2D, time)
+      Draw(render2D)
 
       time.unscaledTime -= FRAMERATE
       time.totalTime = new Date().getTime()
@@ -51,12 +51,17 @@ const Game = (): JSX.Element => {
     entityManager.Update(time)
   }
 
-  const Draw = (render2D: RenderContext2D, time: Time) => {
+  const Draw = (render2D: RenderContext2D) => {
     render2D.clearScreen()
 
-    Map.Instance.Draw(render2D, time)
-    entityManager.Draw(render2D, time)
-    Debug.Instance.Draw(render2D, time)
+    if (PlayableFrog.Instance.levelIndex != null) {
+      render2D.graphics.filter =
+        'hue-rotate(' + 40 * PlayableFrog.Instance.levelIndex + 'deg)'
+    }
+
+    Map.Instance.Draw(render2D)
+    entityManager.Draw(render2D)
+    Debug.Instance.Draw(render2D)
   }
 
   return (

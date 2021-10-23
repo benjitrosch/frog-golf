@@ -16,19 +16,27 @@ type Render2DConstructorParameter = Canvas | HTMLCanvasElement
 
 export default class RenderContext2D {
   public graphics: CanvasRenderingContext2D
+  public canvas: Canvas
 
   constructor(canvas: Render2DConstructorParameter) {
     if (canvas instanceof HTMLCanvasElement) {
       this.graphics = canvas.getContext('2d')
+      this.canvas = new Canvas(canvas)
     }
 
     if (canvas instanceof Canvas) {
       this.graphics = canvas.getContext2D()
+      this.canvas = canvas
     }
   }
 
   clearScreen() {
     this.graphics.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+
+    this.graphics.save()
+    this.graphics.fillStyle = Color.Midtone
+    this.graphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+    this.graphics.restore()
   }
 
   drawAABB(aabb, levelIndex = 0) {

@@ -1,5 +1,5 @@
-export const GAME_WIDTH = 375
-export const GAME_HEIGHT = 667
+export const GAME_WIDTH = 320 // 375
+export const GAME_HEIGHT = 640 // 651
 
 export const GAME_UNIT_SIZE = 32
 

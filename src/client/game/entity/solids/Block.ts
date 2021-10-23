@@ -17,17 +17,21 @@ export default class Block extends Solid {
   convert() {
     return new AABB(
       this.aabb.x,
-      this.aabb.y + this.level.index * GAME_HEIGHT,
+      this.aabb.y + this.levelIndex * GAME_HEIGHT,
       this.aabb.width,
       this.aabb.height
     )
   }
 
-  public Load() {}
+  public Load() {
+    return
+  }
 
-  public Update(time: Time) {}
+  public Update(time: Time) {
+    return
+  }
 
-  public Draw(render2D: RenderContext2D, time: Time) {
+  public Draw(render2D: RenderContext2D) {
     render2D.rectangle(
       this.aabb.x,
       this.aabb.y,

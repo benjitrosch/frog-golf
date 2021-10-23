@@ -1,9 +1,9 @@
 import AABB from '../entity/components/AABB'
 import Block from '../entity/solids/Block'
 import Wall from '../entity/solids/Wall'
+import Grid from './Grid'
 
 import RenderContext2D, { TextAlign } from '../system/RenderContext2D'
-import Time from '../system/Time'
 import Asset from '../system/Asset'
 
 import { GAME_HEIGHT } from '../Constants'
@@ -31,6 +31,8 @@ export default class Level extends Asset {
   public blocks: Block[]
   public walls: Wall[]
 
+  public grid: Grid
+
   public gravity: number
 
   constructor(filePath: string) {
@@ -42,6 +44,8 @@ export default class Level extends Asset {
 
     this.blocks = []
     this.walls = []
+
+    this.grid = new Grid()
   }
 
   async Load(index: number) {
@@ -77,9 +81,11 @@ export default class Level extends Asset {
       })
   }
 
-  Draw(render2D: RenderContext2D, time: Time) {
-    this.blocks.forEach((block) => block.Draw(render2D, time))
-    this.walls.forEach((wall) => wall.Draw(render2D, time))
+  Draw(render2D: RenderContext2D) {
+    this.grid.Draw(render2D)
+
+    this.blocks.forEach((block) => block.Draw(render2D))
+    this.walls.forEach((wall) => wall.Draw(render2D))
 
     render2D.text(
       this.name,

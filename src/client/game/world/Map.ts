@@ -1,7 +1,6 @@
 import Level from './Level'
 
 import RenderContext2D from '../system/RenderContext2D'
-import Time from '../system/Time'
 import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
 
 export default class Map {
@@ -27,7 +26,7 @@ export default class Map {
     return this._instance || (this._instance = new this())
   }
 
-  Draw(render2D: RenderContext2D, time: Time) {
-    this.levels[PlayableFrog.Instance.level.index]?.Draw(render2D, time)
+  Draw(render2D: RenderContext2D) {
+    this.levels[PlayableFrog.Instance.levelIndex]?.Draw(render2D)
   }
 }

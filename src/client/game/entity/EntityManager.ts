@@ -29,8 +29,8 @@ export default class EntityManager {
     this.addQueue = []
   }
 
-  Draw(render2D: RenderContext2D, time: Time) {
-    this.entities.forEach((entity) => entity.Draw(render2D, time))
+  Draw(render2D: RenderContext2D) {
+    this.entities.forEach((entity) => entity.Draw(render2D))
   }
 
   AddEntity<T extends Entity>(entity: T) {

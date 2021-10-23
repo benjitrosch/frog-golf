@@ -1,7 +1,7 @@
 import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
 
 import RenderContext2D, { TextAlign } from './RenderContext2D'
-import Time from './Time'
+// import Time from './Time'
 
 import Color from '../../utils/Color'
 import Fonts from '../../utils/fonts'
@@ -27,7 +27,7 @@ export default class Debug {
     this.enabled = !this.enabled
   }
 
-  Draw(render2D: RenderContext2D, time: Time) {
+  Draw(render2D: RenderContext2D) {
     if (!this.enabled) {
       return
     }
@@ -45,16 +45,16 @@ export default class Debug {
     )
 
     // ticks per second
-    render2D.text(
-      `${Math.trunc(time.unscaledTime)} tps`,
-      GAME_WIDTH - 8,
-      GAME_HEIGHT - LINE_HEIGHT * 3,
-      0,
-      Color.White,
-      TextAlign.Right,
-      14,
-      Fonts.Rainyhearts
-    )
+    // render2D.text(
+    //   `${Math.trunc(time.unscaledTime)} tps`,
+    //   GAME_WIDTH - 8,
+    //   GAME_HEIGHT - LINE_HEIGHT * 3,
+    //   0,
+    //   Color.White,
+    //   TextAlign.Right,
+    //   14,
+    //   Fonts.Rainyhearts
+    // )
 
     // spacer
     render2D.text(
@@ -70,7 +70,7 @@ export default class Debug {
 
     // player current level
     render2D.text(
-      `level: ${PlayableFrog.Instance.level.index}`,
+      `level: ${PlayableFrog.Instance.levelIndex}`,
       GAME_WIDTH - 8,
       GAME_HEIGHT - LINE_HEIGHT * 5,
       0,

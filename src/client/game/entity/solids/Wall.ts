@@ -33,17 +33,21 @@ export default class Wall extends Solid {
     return new Wall(
       this.level,
       this.x0,
-      this.y0 + this.level.index * GAME_HEIGHT,
+      this.y0 + this.levelIndex * GAME_HEIGHT,
       this.width,
       this.height
     )
   }
 
-  public Load() {}
+  public Load() {
+    return
+  }
 
-  public Update(time: Time) {}
+  public Update(time: Time) {
+    return
+  }
 
-  public Draw(render2D: RenderContext2D, time: Time) {
+  public Draw(render2D: RenderContext2D) {
     render2D.line(this.x0, this.x1, this.y0, this.y1, 8, Color.Shadow)
 
     if (Debug.Instance.enabled) {

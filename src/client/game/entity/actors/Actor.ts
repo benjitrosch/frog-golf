@@ -4,9 +4,7 @@ import Vector2 from '../components/Vector2'
 import AABB from '../components/AABB'
 import Sprite from '../Sprite'
 import SoundFX from '../SoundFX'
-import Level from '../../world/Level'
 
-import RenderContext2D from '../../system/RenderContext2D'
 import Time from '../../system/Time'
 import Map from '../../world/Map'
 
@@ -73,8 +71,6 @@ export default abstract class Actor<S> extends Entity {
   protected spritesRight: Sprite<S>[]
   protected soundFX: Record<string, SoundFX>
 
-  public level: Level
-
   constructor(x, y, size) {
     super()
 
@@ -135,8 +131,6 @@ export default abstract class Actor<S> extends Entity {
       this.reponseCollide(testColl)
     }
   }
-
-  abstract Draw(render2D: RenderContext2D, time: Time)
 
   abstract getDrawImage(): Sprite<S>
 
