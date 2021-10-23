@@ -31,22 +31,53 @@ export default class RenderContext2D {
     this.graphics.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
   }
 
-  drawAABB(aabb) {
-    this.emptyRectangle(aabb.x, aabb.y, aabb.width, aabb.height, Color.Red)
+  drawAABB(aabb, levelIndex = 0) {
+    this.emptyRectangle(
+      aabb.x,
+      aabb.y - levelIndex * GAME_HEIGHT,
+      aabb.width,
+      aabb.height,
+      2,
+      Color.Red
+    )
   }
 
   rectangle(x, y, w, h, color = Color.Black) {
+    this.graphics.save()
+
     this.graphics.beginPath()
     this.graphics.rect(x, GAME_HEIGHT - y, w, -h)
-    this.graphics.fill()
     this.graphics.fillStyle = color
+    this.graphics.fill()
+
+    this.graphics.restore()
   }
 
-  emptyRectangle(x, y, w, h, color = Color.Black) {
+  emptyRectangle(x, y, w, h, lineWidth = 2, color = Color.Black) {
+    this.graphics.save()
+
+    this.graphics.strokeStyle = color
+    this.graphics.lineWidth = lineWidth
+
     this.graphics.beginPath()
     this.graphics.strokeRect(x, GAME_HEIGHT - y, w, -h)
     this.graphics.stroke()
+
+    this.graphics.restore()
+  }
+
+  line(x0, x1, y0, y1, lineWidth = 4, color = Color.Black) {
+    this.graphics.save()
+
     this.graphics.strokeStyle = color
+    this.graphics.lineWidth = lineWidth
+
+    this.graphics.beginPath()
+    this.graphics.moveTo(x0, GAME_HEIGHT - y0)
+    this.graphics.lineTo(x1, GAME_HEIGHT - y1)
+    this.graphics.stroke()
+
+    this.graphics.restore()
   }
 
   text(

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 
 import Game from './components/Game'
-import Color from './utils/Color'
 import { slogans } from './utils/slogans'
 
 const generateRandomSlogan = () => {
@@ -9,31 +8,22 @@ const generateRandomSlogan = () => {
 }
 
 const titleStyle = {
-  textShadow: `0px 2px ${Color.Black}`,
+  // textShadow: `0px 2px ${Color.Black}`,
 }
 
 const Play = (): JSX.Element => {
   const slogan = useRef<string>(generateRandomSlogan())
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-      }}
-    >
-      {/* <span className="text-shadow text-4xl text-center" style={titleStyle}>
-        FROG GOLF
-      </span>
-      <span
-        className="text-shadow text-md text-center max-w-xs"
-        style={titleStyle}
-      >
-        "{slogan.current}"
-      </span> */}
+    <div className="w-full h-full flex items-center justify-center">
+      {/* <div className="absolute float-left flex flex-col top-4 left-4">
+        <span className="text-shadow text-5xl" style={titleStyle}>
+          FROG GOLF
+        </span>
+        <span className="text-shadow text-md max-w-md" style={titleStyle}>
+          "{slogan.current}"
+        </span>
+      </div> */}
 
       <Game />
 

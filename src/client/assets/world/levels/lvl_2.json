@@ -1,0 +1,25 @@
+{
+  "title": "Ol' Texas Three-step",
+  "gravity": 0.19,
+  "blocks": [
+    {
+      "x": 224,
+      "y": 100,
+      "width": 96,
+      "height": 32
+    },
+    {
+      "x": 36,
+      "y": 368,
+      "width": 72,
+      "height": 32
+    },
+    {
+      "x": 170,
+      "y": 488,
+      "width": 72,
+      "height": 32
+    }
+  ],
+  "walls": []
+}

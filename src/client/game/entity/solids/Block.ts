@@ -23,13 +23,9 @@ export default class Block extends Solid {
     )
   }
 
-  public Load() {
-    // throw new Error('Method not implemented.')
-  }
+  public Load() {}
 
-  public Update(time: Time) {
-    // throw new Error('Method not implemented.')
-  }
+  public Update(time: Time) {}
 
   public Draw(render2D: RenderContext2D, time: Time) {
     render2D.rectangle(

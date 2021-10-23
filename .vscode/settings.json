@@ -1,26 +1,25 @@
-{  
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
-    "eslint.alwaysShowStatus": true,
-  
-    "prettier.enable": true,
-    "prettier.prettierPath": "./node_modules/prettier",
-    "prettier.configPath": ".prettierrc",
-    "prettier.enableDebugLogs": true,
-  
-    "workbench.editor.enablePreview": false,
-    "formattingToggle.affects": ["formatOnPaste", "formatOnSave", "formatOnType"],
-    "workbench.editorAssociations": {
-      "*.ipynb": "jupyter.notebook.ipynb"
-    },
-    "editor.tabSize": 2,
-    "search.exclude": {
-      "**.svg": true,
-      "package-lock.json": true
-    },
-    "search.searchEditor.defaultNumberOfContextLines": 2,
-    "eslint.options": {},
-    "cSpell.words": ["antd"]
-  }
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "eslint.alwaysShowStatus": true,
+
+  "prettier.enable": true,
+  "prettier.prettierPath": "./node_modules/prettier",
+  "prettier.configPath": ".prettierrc",
+  "prettier.enableDebugLogs": true,
+
+  "workbench.editor.enablePreview": false,
+  "formattingToggle.affects": ["formatOnPaste", "formatOnSave", "formatOnType"],
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+  },
+  "editor.tabSize": 2,
+  "search.exclude": {
+    "**.svg": true,
+    "package-lock.json": true
+  },
+  "search.searchEditor.defaultNumberOfContextLines": 2,
+  "eslint.options": {}
+}

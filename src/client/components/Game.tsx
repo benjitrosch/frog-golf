@@ -5,6 +5,7 @@ import Time from '../game/system/Time'
 import Canvas from '../game/system/Canvas'
 import RenderContext2D from '../game/system/RenderContext2D'
 import EntityManager from '../game/entity/EntityManager'
+import Map from '../game/world/Map'
 import Debug from '../game/system/Debug'
 
 import PlayableFrog from '../game/entity/actors/Frog/PlayableFrog'
@@ -53,10 +54,9 @@ const Game = (): JSX.Element => {
   const Draw = (render2D: RenderContext2D, time: Time) => {
     render2D.clearScreen()
 
+    Map.Instance.Draw(render2D, time)
     entityManager.Draw(render2D, time)
     Debug.Instance.Draw(render2D, time)
-
-    render2D.text('test text!!!', GAME_WIDTH / 2, 100)
   }
 
   return (
@@ -65,7 +65,7 @@ const Game = (): JSX.Element => {
       width={GAME_WIDTH}
       height={GAME_HEIGHT}
       className="bg-mid border-shadow border-8 rounded-2xl"
-      // style={{ imageRendering: 'pixelated' }}
+      style={{ imageRendering: 'pixelated' }}
     />
   )
 }

@@ -1,0 +1,38 @@
+{
+  "title": "Ain't Easy Being #008000...",
+  "gravity": 0.19,
+  "blocks": [
+    {
+      "x": 0,
+      "y": 32,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 256,
+      "y": 32,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 220,
+      "y": 320,
+      "width": 100,
+      "height": 32
+    },
+    {
+      "x": 0,
+      "y": 540,
+      "width": 124,
+      "height": 32
+    }
+  ],
+  "walls": [
+    {
+      "x": 100,
+      "y": 240,
+      "width": 0,
+      "height": 240
+    }
+  ]
+}

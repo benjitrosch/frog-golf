@@ -113,6 +113,8 @@ export default class Frog extends Actor<FrogState> {
       this.size,
       this.size
     )
+
+    //render2D.text('test', this.x, this.y, this.level.index)
   }
 
   getDrawImage() {
@@ -143,6 +145,12 @@ export default class Frog extends Actor<FrogState> {
     super.collideToBottom(w, () => {
       this.setState(FrogState.IDLE)
       this.soundFX.land.play()
+    })
+  }
+
+  collideToWall(s, r) {
+    super.collideToWall(s, r, () => {
+      this.soundFX.bounce.play()
     })
   }
 }

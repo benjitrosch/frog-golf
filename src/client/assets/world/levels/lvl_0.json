@@ -1,0 +1,13 @@
+{
+  "title": "SPACE to JUMP!",
+  "gravity": 0.19,
+  "blocks": [
+    {
+      "x": 80,
+      "y": 300,
+      "width": 160,
+      "height": 32
+    }
+  ],
+  "walls": []
+}

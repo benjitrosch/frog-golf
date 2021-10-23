@@ -1,15 +1,95 @@
+import AABB from '../entity/components/AABB'
 import Block from '../entity/solids/Block'
+import Wall from '../entity/solids/Wall'
 
-export default class Level {
+import RenderContext2D, { TextAlign } from '../system/RenderContext2D'
+import Time from '../system/Time'
+import Asset from '../system/Asset'
+
+import { GAME_HEIGHT } from '../Constants'
+import Color from '../../utils/Color'
+import Fonts from '../../utils/fonts'
+
+type SolidData = {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+type LevelData = {
+  title: string
+  gravity: number
+  blocks: SolidData[]
+  walls: SolidData[]
+}
+
+export default class Level extends Asset {
   public name: string
   public index: number
 
   public blocks: Block[]
+  public walls: Wall[]
 
-  constructor(name: string, index) {
-    this.name = name
-    this.index = index
+  public gravity: number
+
+  constructor(filePath: string) {
+    super(filePath)
+
+    // Initialize values as non-null to prevent errors
+    this.name = ''
+    this.index = 0
 
     this.blocks = []
+    this.walls = []
+  }
+
+  async Load(index: number) {
+    this.index = index
+
+    // Load JSON lvl data
+    await fetch(this.filePath)
+      .then((res) => res.json())
+      .then((data: LevelData) => {
+        this.name = data.title
+        this.gravity = data.gravity
+
+        // Parse block data to blocks
+        const blocks: Block[] = []
+        data.blocks.forEach((block) => {
+          blocks.push(
+            new Block(
+              this,
+              new AABB(block.x, block.y, block.width, block.height)
+            )
+          )
+        })
+
+        this.blocks = blocks
+
+        // Parse wall data to walls
+        const walls: Wall[] = []
+        data.walls.forEach((wall) => {
+          walls.push(new Wall(this, wall.x, wall.y, wall.width, wall.height))
+        })
+
+        this.walls = walls
+      })
+  }
+
+  Draw(render2D: RenderContext2D, time: Time) {
+    this.blocks.forEach((block) => block.Draw(render2D, time))
+    this.walls.forEach((wall) => wall.Draw(render2D, time))
+
+    render2D.text(
+      this.name,
+      4,
+      GAME_HEIGHT * (this.index + 1) - 32,
+      this.index,
+      Color.Shadow,
+      TextAlign.Left,
+      12,
+      Fonts.Gameboy
+    )
   }
 }

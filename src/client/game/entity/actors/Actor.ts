@@ -12,12 +12,13 @@ import Map from '../../world/Map'
 
 import {
   BOUND_FRICTION,
+  DEFAULT_GRAVITY,
   GAME_HEIGHT,
   GAME_WIDTH,
-  GRAVITY,
   LINEAR_DRAG,
 } from '../../Constants'
 import { heightToLevel } from '../../../utils/WorldCoordinates'
+import { getIntersect } from '../../../utils/collision'
 
 export enum Direction {
   LEFT = -1,
@@ -29,11 +30,16 @@ export enum CollisionDirection {
   RIGHT,
   TOP,
   BOTTOM,
+  WALL,
 }
 
 type CollisionResponse = {
   side: CollisionDirection
   set: number
+  ref?: {
+    x: number
+    y: number
+  }
 }
 
 export default abstract class Actor<S> extends Entity {
@@ -114,8 +120,11 @@ export default abstract class Actor<S> extends Entity {
     }
 
     //Apply gravity
-    if (this.testCollide(0, -GRAVITY).side == undefined) {
-      this.vy -= GRAVITY
+    if (
+      this.testCollide(0, -(this.level?.gravity ?? DEFAULT_GRAVITY)).side ==
+      undefined
+    ) {
+      this.vy -= this.level.gravity ?? DEFAULT_GRAVITY
       this.onGround = false
     }
 
@@ -161,8 +170,6 @@ export default abstract class Actor<S> extends Entity {
       set = this.y
     } else {
       for (const b of this.level.blocks) {
-        if (b.level != this.level) continue
-
         const aabb = b.convert()
         const r = aabb.checkCollideBox(box)
 
@@ -220,6 +227,41 @@ export default abstract class Actor<S> extends Entity {
           return { side, set }
         }
       }
+
+      for (let w of this.level.walls) {
+        w = w.convert()
+        const r = w.checkCollideAABB(box, nvx, nvy)
+
+        if (r.collide != undefined) {
+          side = CollisionDirection.WALL
+          const nv = new Vector2(nvx, nvy)
+          let n
+
+          if (!r.endPoint) {
+            const hitPoint = getIntersect(
+              w.x0,
+              w.y0,
+              w.x1,
+              w.y1,
+              r.collide.x,
+              r.collide.y,
+              r.collide.x + nvx,
+              r.collide.y + nvy
+            )
+
+            set = new Vector2(box.x, box.y).add(hitPoint.sub(r.collide))
+            n = w.getNormal()
+          } else {
+            n = new Vector2(w.x0, w.y0).sub(new Vector2(w.x1, w.y1))
+            n.normalize()
+            set = new Vector2(box.x, box.y).sub(nv.mul(3))
+          }
+
+          const ref = nv.sub(n.mul(2).mul(nv.dot(n)))
+
+          return { side, set, ref }
+        }
+      }
     }
 
     return { side, set }
@@ -238,6 +280,9 @@ export default abstract class Actor<S> extends Entity {
         break
       case CollisionDirection.TOP:
         this.collideToTop(c.set)
+        break
+      case CollisionDirection.WALL:
+        this.collideToWall(c.set, c.ref)
         break
     }
   }
@@ -279,6 +324,19 @@ export default abstract class Actor<S> extends Entity {
     this.vy = 0
 
     this.onGround = true
+
+    if (onHit != null) {
+      onHit()
+    }
+  }
+
+  collideToWall(s, r, onHit?: () => void) {
+    this.x = s.x
+    this.y = s.y
+    this.vx = r.x * LINEAR_DRAG
+    this.vy = r.y
+
+    this.direction = Math.sign(this.vx)
 
     if (onHit != null) {
       onHit()

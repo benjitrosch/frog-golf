@@ -91,7 +91,7 @@ export default class PlayableFrog extends Frog implements IPlayable {
     )
 
     if (Debug.Instance.enabled) {
-      render2D.drawAABB(this.aabb)
+      render2D.drawAABB(this.aabb, this.level.index)
     }
   }
 
