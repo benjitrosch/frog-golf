@@ -1,5 +1,7 @@
 import Tile from './Tile'
 import Level from './Level'
+import Block from '../entity/solids/Block'
+import AABB from '../entity/components/AABB'
 
 import RenderContext2D from '../system/RenderContext2D'
 import Debug from '../system/Debug'
@@ -7,8 +9,6 @@ import Debug from '../system/Debug'
 import { GAME_HEIGHT, GAME_UNIT_SIZE, GAME_WIDTH } from '../Constants'
 import Color from '../../utils/Color'
 import Vector2 from '../entity/components/Vector2'
-import Block from '../entity/solids/Block'
-import AABB from '../entity/components/AABB'
 
 export default class Grid {
   private level: Level
@@ -35,7 +35,9 @@ export default class Grid {
     this.tiles = tiles
 
     this.lastMousPos = new Vector2(0, 0)
-    document.onclick = () => this.selectTile()
+    document.addEventListener('mousedown', () => {
+      this.selectTile()
+    })
   }
 
   Draw(render2D: RenderContext2D) {
@@ -49,8 +51,6 @@ export default class Grid {
         this.lastMousPos = new Vector2(x, y)
 
         this.tiles.forEach((tile) => {
-          // tile.Draw(render2D)
-
           if (tile.x === x && tile.y === y) {
             render2D.rectangle(
               tile.x * GAME_UNIT_SIZE,
@@ -66,16 +66,18 @@ export default class Grid {
   }
 
   selectTile() {
-    this.level.addBlock(
-      new Block(
-        this.level,
-        new AABB(
-          this.lastMousPos.x,
-          this.lastMousPos.y,
-          GAME_UNIT_SIZE,
-          GAME_UNIT_SIZE
+    if (Debug.Instance.enabled) {
+      this.level.addBlock(
+        new Block(
+          this.level,
+          new AABB(
+            this.lastMousPos.x * GAME_UNIT_SIZE,
+            this.lastMousPos.y * GAME_UNIT_SIZE,
+            GAME_UNIT_SIZE,
+            GAME_UNIT_SIZE
+          )
         )
       )
-    )
+    }
   }
 }

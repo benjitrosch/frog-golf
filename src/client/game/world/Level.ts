@@ -9,6 +9,7 @@ import Asset from '../system/Asset'
 import { GAME_HEIGHT } from '../Constants'
 import Color from '../../utils/Color'
 import Fonts from '../../utils/fonts'
+import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
 
 type SolidData = {
   x: number
@@ -100,7 +101,6 @@ export default class Level extends Asset {
   }
 
   addBlock(block: Block) {
-    console.log('added block!')
-    this.blocks = []
+    this.blocks.push(block)
   }
 }
