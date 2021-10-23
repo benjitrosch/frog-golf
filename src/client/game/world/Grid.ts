@@ -19,6 +19,7 @@ export default class Grid {
   public tiles: Tile[]
 
   private lastMousPos: Vector2
+  private mouseDown: boolean
 
   constructor(level: Level) {
     this.level = level
@@ -35,9 +36,20 @@ export default class Grid {
     this.tiles = tiles
 
     this.lastMousPos = new Vector2(0, 0)
+
     document.addEventListener('mousedown', () => {
+      this.mouseDown = true
       this.selectTile()
     })
+    // TODO: implement way to handle duplicate tile coords so we don't stack hundreds of tiles upon each other per frame
+    // document.addEventListener('mouseup', () => {
+    //   this.mouseDown = false
+    // })
+    // document.addEventListener('mousemove', () => {
+    //   if (this.mouseDown) {
+    //     this.selectTile()
+    //   }
+    // })
   }
 
   Draw(render2D: RenderContext2D) {
