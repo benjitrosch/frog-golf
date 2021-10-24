@@ -1,6 +1,6 @@
 import Canvas from './Canvas'
 
-import Color from '../../utils/Color'
+import Color from '../../utils/color'
 import Fonts from '../../utils/fonts'
 import { GAME_HEIGHT, GAME_UNIT_SIZE, GAME_WIDTH } from '../Constants'
 import { invertedYCoord } from '../../utils/WorldCoordinates'

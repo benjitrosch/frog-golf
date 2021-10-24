@@ -6,8 +6,11 @@
     "start": "cross-env NODE_ENV=production node build/server/server.js",
     "build": "webpack",
     "compile": "tsc",
+    "build-tsc": "concurrently \"npm run compile\" \"npm run build\"",
     "postinstall": "npm run compile",
-    "dev": "webpack serve --open",
+    "dev": "concurrently \"webpack serve --open\" \"tsc -w\" \"nodemon build/server/server.js\"",
+    "dev-client": "webpack serve --open",
+    "dev-server": "concurrently \"tsc -w\" \"nodemon build/server/server.js\"",
     "eslint": "eslint ./src --fix",
     "prettier": "prettier --write ./src"
   },

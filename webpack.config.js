@@ -64,10 +64,27 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|jp2|webp)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-        },
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets/sprites/'
+            },
+          }
+        ]
+      },
+      {
+        test: /\.(mp3|wav)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets/sounds/'
+            }
+          }
+        ]
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -85,6 +102,13 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    proxy: {
+      '/level/*': 'http://localhost:3000',
+      '/socket.io': {
+        target: 'http://localhost:3000',
+        ws: true
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

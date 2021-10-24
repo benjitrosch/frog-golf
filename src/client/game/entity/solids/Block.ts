@@ -6,10 +6,28 @@ import RenderContext2D from '../../system/RenderContext2D'
 import Time from '../../system/Time'
 import Debug from '../../system/Debug'
 
-import Color from '../../../utils/Color'
+import Color from '../../../utils/color'
 import { GAME_HEIGHT } from '../../Constants'
+import Vector2 from '../components/Vector2'
 
 export default class Block extends Solid {
+  public get x() {
+    return this.aabb.x
+  }
+  public get y() {
+    return this.aabb.y
+  }
+  public get position() {
+    return new Vector2(this.aabb.x, this.aabb.y)
+  }
+
+  public get width() {
+    return this.aabb.width
+  }
+  public get height() {
+    return this.aabb.height
+  }
+
   constructor(level, aabb) {
     super(level, aabb)
   }

@@ -1,7 +1,7 @@
 import RenderContext2D from '../system/RenderContext2D'
 
 import { GAME_UNIT_SIZE } from '../Constants'
-import Color from '../../utils/Color'
+import Color from '../../utils/color'
 import Vector2 from '../entity/components/Vector2'
 
 export default class Tile {
