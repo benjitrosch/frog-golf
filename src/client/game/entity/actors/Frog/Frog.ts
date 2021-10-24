@@ -106,15 +106,20 @@ export default class Frog extends Actor<FrogState> {
   Draw(render2D: RenderContext2D) {
     const { graphics } = render2D
 
-    graphics.drawImage(
-      this.getDrawImage().image,
-      this.x,
-      invertedYCoord(this.y, this.levelIndex, this.size),
-      this.size,
-      this.size
-    )
+    const sprite = this.getDrawImage()
 
-    //render2D.text('test', this.x, this.y, this.levelIndex)
+    // Only draw if HTMLImageElement has successfully loaded
+    if (sprite.loaded) {
+      graphics.drawImage(
+        sprite.image,
+        this.x,
+        invertedYCoord(this.y, this.levelIndex, this.size),
+        this.size,
+        this.size
+      )
+    }
+
+    // render2D.text('test', this.x, this.y, this.levelIndex)
   }
 
   getDrawImage() {

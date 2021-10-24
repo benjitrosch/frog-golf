@@ -3,7 +3,7 @@ export default class Asset {
   protected fileName: string
 
   constructor(filePath: string) {
-    this.filePath = `/src/assets/${filePath}`
+    this.filePath = `/assets/${filePath}`
 
     const directories = filePath.split('/')
     this.fileName = directories[directories.length - 1] ?? filePath

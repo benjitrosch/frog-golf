@@ -1,18 +1,22 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "module": "es6",
+    "module": "commonjs",
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "types": ["node"],
     "outDir": "./build/",
+    "rootDir": "src",
     "typeRoots": ["node_modules/@types"],
     "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,
     "esModuleInterop": true,
+    // "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "target": "ES2020"
   },
-  "include": ["src"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", ".vscode"]
 }

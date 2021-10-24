@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const express = require('express')
+import express from 'express'
 
-const levelController = require('../controllers/levelController')
+// import levelController from '../controllers/levelController'
 
 const router = express.Router()
 
@@ -14,4 +14,4 @@ router.post('/save', (_, res) => {
   return res.status(200).json({ message: 'bye' })
 })
 
-module.exports = router
+export default router
