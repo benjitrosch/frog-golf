@@ -31,6 +31,7 @@ export default class Canvas {
     }
 
     this.canvas.onmousemove = (e) => this.getMousePos(e)
+    this.canvas.oncontextmenu = (e) => e.preventDefault()
   }
 
   getContext2D() {

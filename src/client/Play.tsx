@@ -3,7 +3,6 @@ import React from 'react'
 import Game from './components/Game'
 
 import PlayableFrog from './game/entity/actors/Frog/PlayableFrog'
-import { SolidData } from './game/world/Level'
 
 // import { slogans } from './utils/slogans'
 
@@ -17,24 +16,12 @@ const Play = (): JSX.Element => {
   const handleSaveLevelData = async () => {
     const level = PlayableFrog.Instance.level
 
-    const body = {
-      fileName: level.fileName,
-      blocks: level.blocks.map((block) => {
-        return {
-          x: block.x,
-          y: block.y,
-          width: block.width,
-          height: block.height,
-        } as SolidData
-      }),
-    }
-
     await fetch('/level/save', {
       method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON',
       },
-      body: JSON.stringify(body),
+      body: level.serializeToJSON(),
     })
   }
 

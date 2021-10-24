@@ -3,7 +3,7 @@ import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
 import RenderContext2D, { TextAlign } from './RenderContext2D'
 // import Time from './Time'
 
-import Color from '../../utils/Color'
+import Color from '../../utils/color'
 import Fonts from '../../utils/fonts'
 import { vector2ToString } from '../../utils/string'
 import { GAME_HEIGHT, GAME_WIDTH } from '../Constants'
@@ -44,21 +44,23 @@ export default class Debug {
       Fonts.Rainyhearts
     )
 
-    // ticks per second
-    // render2D.text(
-    //   `${Math.trunc(time.unscaledTime)} tps`,
-    //   GAME_WIDTH - 8,
-    //   GAME_HEIGHT - LINE_HEIGHT * 3,
-    //   0,
-    //   Color.White,
-    //   TextAlign.Right,
-    //   14,
-    //   Fonts.Rainyhearts
-    // )
-
-    // spacer
+    // player current level
     render2D.text(
-      '---',
+      `level: ${PlayableFrog.Instance.levelIndex}`,
+
+      GAME_WIDTH - 8,
+      GAME_HEIGHT - LINE_HEIGHT * 3,
+      0,
+      Color.White,
+      TextAlign.Right,
+      14,
+      Fonts.Rainyhearts
+    )
+
+    // current level num blocks
+    render2D.text(
+      `# blocks: ${PlayableFrog.Instance.level.numBlocks}`,
+
       GAME_WIDTH - 8,
       GAME_HEIGHT - LINE_HEIGHT * 4,
       0,
@@ -68,9 +70,9 @@ export default class Debug {
       Fonts.Rainyhearts
     )
 
-    // player current level
+    // spacer
     render2D.text(
-      `level: ${PlayableFrog.Instance.levelIndex}`,
+      '---',
       GAME_WIDTH - 8,
       GAME_HEIGHT - LINE_HEIGHT * 5,
       0,

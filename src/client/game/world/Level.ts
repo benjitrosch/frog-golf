@@ -7,8 +7,9 @@ import RenderContext2D, { TextAlign } from '../system/RenderContext2D'
 import Asset from '../system/Asset'
 
 import { GAME_HEIGHT } from '../Constants'
-import Color from '../../utils/Color'
+import Color from '../../utils/color'
 import Fonts from '../../utils/fonts'
+import Vector2 from '../entity/components/Vector2'
 
 export type SolidData = {
   x: number
@@ -29,6 +30,9 @@ export default class Level extends Asset {
   public index: number
 
   public blocks: Block[]
+  public get numBlocks() {
+    return this.blocks.length
+  }
   public walls: Wall[]
 
   public grid: Grid
@@ -103,17 +107,40 @@ export default class Level extends Asset {
     this.blocks.push(block)
   }
 
-  serializeToJSON() {
-    const blockData = this.blocks.map((block) => {
-      return {
-        x: block.x,
-        y: block.y,
-        width: block.width,
-        height: block.height,
-      } as SolidData
-    })
+  removeBlock(blockId: string | null) {
+    if (blockId === null) {
+      throw new Error(
+        `No block of id ${blockId} exists in level ${this.fileName}`
+      )
+    }
 
-    const JSONBlockData = JSON.stringify(blockData)
-    console.log(JSONBlockData)
+    this.blocks.splice(
+      this.blocks.findIndex((block) => block.uuid === blockId),
+      1
+    )
+  }
+
+  serializeToJSON() {
+    const body = {
+      fileName: this.fileName,
+      blocks: this.blocks.map((block) => {
+        return {
+          x: block.x,
+          y: block.y,
+          width: block.width,
+          height: block.height,
+        } as SolidData
+      }),
+    }
+
+    return JSON.stringify(body)
+  }
+
+  checkBlock(pos: Vector2): string | null {
+    const targetBlock = this.blocks.find(
+      (block) => block.x === pos.x && block.y === pos.y
+    )
+
+    return targetBlock ? targetBlock.uuid : null
   }
 }

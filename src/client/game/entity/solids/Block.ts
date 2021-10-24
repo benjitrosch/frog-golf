@@ -6,7 +6,7 @@ import RenderContext2D from '../../system/RenderContext2D'
 import Time from '../../system/Time'
 import Debug from '../../system/Debug'
 
-import Color from '../../../utils/Color'
+import Color from '../../../utils/color'
 import { GAME_HEIGHT } from '../../Constants'
 import Vector2 from '../components/Vector2'
 

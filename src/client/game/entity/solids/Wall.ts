@@ -5,7 +5,7 @@ import Debug from '../../system/Debug'
 import Time from '../../system/Time'
 import Vector2 from '../components/Vector2'
 
-import Color from '../../../utils/Color'
+import Color from '../../../utils/color'
 import { GAME_HEIGHT } from '../../Constants'
 
 export default class Wall extends Solid {
