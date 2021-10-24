@@ -15,31 +15,36 @@ type LevelData = {
   walls: SolidData[]
 }
 
-exports.levelController = {
-  serializeLevelData(req: Request, _res: Response, next): void {
-    const { filePath, newBlock } = req.body as unknown as {
-      filePath: string
-      newBlock: SolidData
-    }
+const levelController = {
+  serializeLevelData(req, _res, next) {
+    // const { filePath, blocks } = req.body as unknown as {
+    //   filePath: string
+    //   blocks: SolidData[]
+    // }
 
-    try {
-      fs.readFile(filePath, 'utf-8', function (err, data) {
-        if (err) throw err
+    console.log(req)
+    return next()
 
-        const levelData: LevelData = JSON.parse(data)
-        levelData.blocks.push(newBlock)
+    // try {
+    //   fs.readFile(filePath, 'utf-8', function (err, data) {
+    //     if (err) throw err
 
-        fs.writeFile(filePath, JSON.stringify(levelData), 'utf-8', (err) => {
-          if (err) throw err
-          return next()
-        })
-      })
-    } catch (err) {
-      const errorObj = {
-        message: `Error saving level data: ${err}`,
-        log: 'Error in levelController.serializeLevelData. Check error error logs',
-      }
-      return next(errorObj)
-    }
+    //     const levelData: LevelData = JSON.parse(data)
+    //     levelData.blocks = blocks
+
+    //     fs.writeFile(filePath, JSON.stringify(levelData), 'utf-8', (err) => {
+    //       if (err) throw err
+    //       return next()
+    //     })
+    //   })
+    // } catch (err) {
+    //   const errorObj = {
+    //     message: `Error saving level data: ${err}`,
+    //     log: 'Error in levelController.serializeLevelData. Check error error logs',
+    //   }
+    //   return next(errorObj)
+    // }
   },
 }
+
+export default levelController

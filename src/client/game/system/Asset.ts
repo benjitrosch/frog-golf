@@ -1,6 +1,6 @@
 export default class Asset {
-  protected filePath: string
-  protected fileName: string
+  public filePath: string
+  public fileName: string
 
   constructor(filePath: string) {
     this.filePath = `/src/assets/${filePath}`

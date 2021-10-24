@@ -2,6 +2,10 @@ import React from 'react'
 
 import Game from './components/Game'
 
+import Map from './game/world/Map'
+import PlayableFrog from './game/entity/actors/Frog/PlayableFrog'
+import { SolidData } from './game/world/Level'
+
 // import { slogans } from './utils/slogans'
 
 // const generateRandomSlogan = () => {
@@ -11,19 +15,27 @@ import Game from './components/Game'
 const Play = (): JSX.Element => {
   // const slogan = useRef<string>(generateRandomSlogan())
 
-  const handleTestServer = async () => {
-    const body = {
-      test: 'hi',
-    }
+  const handleSaveLevelData = async () => {
+    const level = PlayableFrog.Instance.level
 
-    console.log('asdgsdg')
+    const body = {
+      filePath: level.filePath,
+      blocks: level.blocks.map((block) => {
+        return {
+          x: block.x,
+          y: block.y,
+          width: block.width,
+          height: block.height,
+        } as SolidData
+      }),
+    }
 
     await fetch('/level/save', {
       method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON',
-        body: JSON.stringify(body),
       },
+      body: JSON.stringify(body),
     })
   }
 
@@ -40,7 +52,7 @@ const Play = (): JSX.Element => {
 
       <Game />
 
-      <button onClick={handleTestServer}>click me!</button>
+      <button onClick={handleSaveLevelData}>save level to JSON!</button>
 
       {/* <div>
         <button>{'<'}</button>
