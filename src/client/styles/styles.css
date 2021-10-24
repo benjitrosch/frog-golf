@@ -4,23 +4,25 @@
 
 @font-face {
   font-family: 'gameboy';
-  src: url('../assets/font/gameboyfont/early_gameboy-webfont.woff2')
+  src: url('../../assets/font/gameboyfont/early_gameboy-webfont.woff2')
       format('woff2'),
-    url('../assets/font/gameboyfont/early_gameboy-webfont.woff') format('woff');
+    url('../../assets/font/gameboyfont/early_gameboy-webfont.woff')
+      format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'rainyhearts';
-  src: url('../assets/font/rainyhearts/rainyhearts.ttf') format('ttf');
+  src: url('../../assets/font/rainyhearts/rainyhearts.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'minecraftia';
-  src: url('../assets/font/minecraftia/Minecraftia-Regular.ttf') format('ttf');
+  src: url('../../assets/font/minecraftia/Minecraftia-Regular.ttf')
+    format('ttf');
   font-weight: normal;
   font-style: normal;
 }

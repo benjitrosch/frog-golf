@@ -8,6 +8,8 @@ export default class Sprite<S> extends Asset {
 
   public image: HTMLImageElement
 
+  public loaded: boolean
+
   constructor(state: S, direction: Direction, filePath: string) {
     super(filePath)
 
@@ -16,6 +18,10 @@ export default class Sprite<S> extends Asset {
 
     const image = new Image()
     image.src = this.filePath
+    image.onload = () => {
+      this.loaded = true
+    }
+
     this.image = image
   }
 }

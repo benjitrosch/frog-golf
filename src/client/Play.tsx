@@ -11,6 +11,22 @@ import Game from './components/Game'
 const Play = (): JSX.Element => {
   // const slogan = useRef<string>(generateRandomSlogan())
 
+  const handleTestServer = async () => {
+    const body = {
+      test: 'hi',
+    }
+
+    console.log('asdgsdg')
+
+    await fetch('/level/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/JSON',
+        body: JSON.stringify(body),
+      },
+    })
+  }
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       {/* <div className="absolute float-left flex flex-col top-4 left-4">
@@ -23,6 +39,8 @@ const Play = (): JSX.Element => {
       </div> */}
 
       <Game />
+
+      <button onClick={handleTestServer}>click me!</button>
 
       {/* <div>
         <button>{'<'}</button>

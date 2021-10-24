@@ -60,7 +60,7 @@ const Game = (): JSX.Element => {
     }
 
     Map.Instance.Draw(render2D)
-    entityManager.Draw(render2D)
+    // entityManager.Draw(render2D)
     Debug.Instance.Draw(render2D)
   }
 

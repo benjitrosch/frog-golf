@@ -9,16 +9,15 @@ import Asset from '../system/Asset'
 import { GAME_HEIGHT } from '../Constants'
 import Color from '../../utils/Color'
 import Fonts from '../../utils/fonts'
-import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
 
-type SolidData = {
+export type SolidData = {
   x: number
   y: number
   width: number
   height: number
 }
 
-type LevelData = {
+export type LevelData = {
   title: string
   gravity: number
   blocks: SolidData[]
@@ -102,5 +101,19 @@ export default class Level extends Asset {
 
   addBlock(block: Block) {
     this.blocks.push(block)
+  }
+
+  serializeToJSON() {
+    const blockData = this.blocks.map((block) => {
+      return {
+        x: block.x,
+        y: block.y,
+        width: block.width,
+        height: block.height,
+      } as SolidData
+    })
+
+    const JSONBlockData = JSON.stringify(blockData)
+    console.log(JSONBlockData)
   }
 }
