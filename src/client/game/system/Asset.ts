@@ -1,5 +1,5 @@
 export default class Asset {
-  public filePath: string
+  protected filePath: string
   public fileName: string
 
   constructor(filePath: string) {

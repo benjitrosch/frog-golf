@@ -2,7 +2,6 @@ import React from 'react'
 
 import Game from './components/Game'
 
-import Map from './game/world/Map'
 import PlayableFrog from './game/entity/actors/Frog/PlayableFrog'
 import { SolidData } from './game/world/Level'
 
@@ -19,7 +18,7 @@ const Play = (): JSX.Element => {
     const level = PlayableFrog.Instance.level
 
     const body = {
-      filePath: level.filePath,
+      fileName: level.fileName,
       blocks: level.blocks.map((block) => {
         return {
           x: block.x,
@@ -39,6 +38,13 @@ const Play = (): JSX.Element => {
     })
   }
 
+  const handleLoadLevelData = async () => {
+    const level = PlayableFrog.Instance.level
+
+    const response = await fetch(`/level/load/${level.fileName}`)
+    console.log(await response.json())
+  }
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       {/* <div className="absolute float-left flex flex-col top-4 left-4">
@@ -53,6 +59,7 @@ const Play = (): JSX.Element => {
       <Game />
 
       <button onClick={handleSaveLevelData}>save level to JSON!</button>
+      <button onClick={handleLoadLevelData}>load level JSON!</button>
 
       {/* <div>
         <button>{'<'}</button>
