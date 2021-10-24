@@ -8,9 +8,9 @@
     "compile": "tsc",
     "build-tsc": "concurrently \"npm run compile\" \"npm run build\"",
     "postinstall": "npm run compile",
-    "dev": "concurrently \"tsc -w\" \"nodemon build/server/server.js\"",
+    "dev": "concurrently \"webpack serve --open\" \"tsc -w\" \"nodemon build/server/server.js\"",
     "dev-client": "webpack serve --open",
-    "dev-server": "cross-env NODE_ENV=production nodemon build/server/server.js localhost 8080",
+    "dev-server": "concurrently \"tsc -w\" \"nodemon build/server/server.js\"",
     "eslint": "eslint ./src --fix",
     "prettier": "prettier --write ./src"
   },
