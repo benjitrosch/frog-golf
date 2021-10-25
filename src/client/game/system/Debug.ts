@@ -12,15 +12,14 @@ const LINE_HEIGHT = 16
 
 export default class Debug {
   private static _instance: Debug
+  public static get Instance() {
+    return this._instance || (this._instance = new this())
+  }
 
   public enabled: boolean
 
   private constructor() {
     this.enabled = false
-  }
-
-  public static get Instance() {
-    return this._instance || (this._instance = new this())
   }
 
   toggleDebug() {

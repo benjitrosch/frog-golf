@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useEffect } from 'react'
 
+import GameManager from '../game/system/GameManager'
 import Time from '../game/system/Time'
 import Canvas from '../game/system/Canvas'
 import RenderContext2D from '../game/system/RenderContext2D'
@@ -26,6 +27,8 @@ const Game = (): JSX.Element => {
   const Initialize = () => {
     const canvas = new Canvas(canvasRef.current)
     const render2D = new RenderContext2D(canvas)
+
+    GameManager.Instance.setCanvas(canvas)
 
     entityManager.AddEntity(PlayableFrog.Instance)
 

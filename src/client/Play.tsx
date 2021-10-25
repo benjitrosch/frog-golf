@@ -45,8 +45,8 @@ const Play = (): JSX.Element => {
 
       <Game />
 
-      <button onClick={handleSaveLevelData}>save level to JSON!</button>
-      <button onClick={handleLoadLevelData}>load level JSON!</button>
+      {/* <button onClick={handleSaveLevelData}>save level to JSON!</button>
+      <button onClick={handleLoadLevelData}>load level JSON!</button> */}
 
       {/* <div>
         <button>{'<'}</button>

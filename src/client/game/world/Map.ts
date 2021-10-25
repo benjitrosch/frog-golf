@@ -5,6 +5,9 @@ import PlayableFrog from '../entity/actors/Frog/PlayableFrog'
 
 export default class Map {
   private static _instance: Map
+  public static get Instance() {
+    return this._instance || (this._instance = new this())
+  }
 
   public levels: Level[]
   public get numLevels() {
@@ -20,10 +23,6 @@ export default class Map {
       new Level('world/levels/lvl_4.json'),
     ]
     this.levels.forEach((level, i) => level.Load(i))
-  }
-
-  public static get Instance() {
-    return this._instance || (this._instance = new this())
   }
 
   Draw(render2D: RenderContext2D) {

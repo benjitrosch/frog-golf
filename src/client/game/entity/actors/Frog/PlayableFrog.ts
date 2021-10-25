@@ -1,6 +1,7 @@
 import Frog, { FrogState } from './Frog'
 import IPlayable, { ArrowKey } from '../IPlayable'
 
+import GameManager from '../../../system/GameManager'
 import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
 import Debug from '../../../system/Debug'
@@ -24,6 +25,8 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
     document.onkeydown = (e) => this.keyDown(e)
     document.onkeyup = (e) => this.keyUp(e)
+    document.ontouchstart = (e) => this.touchDown(e)
+    document.ontouchend = () => this.touchUp()
   }
 
   public static get Instance() {
@@ -100,5 +103,26 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
   keyUp(e: KeyboardEvent) {
     this.keys[e.key] = false
+  }
+
+  touchDown(e: TouchEvent) {
+    const pos = GameManager.Instance.canvas.getTouchPos(e)
+
+    if (pos.x < GAME_WIDTH / 2) {
+      this.keys[' '] = true
+      this.keys.ArrowLeft = true
+      this.keys.ArrowRight = false
+    } else if (pos.x >= GAME_WIDTH / 2) {
+      this.keys[' '] = true
+      this.keys.ArrowRight = true
+      this.keys.ArrowLeft = false
+    }
+  }
+
+  touchUp() {
+    if (!this.keys[' ']) {
+      this.keys.ArrowLeft = false
+      this.keys.ArrowRight = false
+    } else this.keys[' '] = false
   }
 }

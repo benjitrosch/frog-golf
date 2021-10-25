@@ -1,4 +1,5 @@
 import { getMousePos } from '../../utils/WorldCoordinates'
+import { GAME_HEIGHT } from '../Constants'
 import Vector2 from '../entity/components/Vector2'
 
 type CanvasConstructorParameter = string | HTMLCanvasElement
@@ -40,5 +41,14 @@ export default class Canvas {
 
   getMousePos(e) {
     this.mousePos = getMousePos(this.canvas, e)
+  }
+
+  getTouchPos(e) {
+    const rect = this.canvas.getBoundingClientRect()
+
+    return {
+      x: Math.trunc(e.touches[0].clientX - rect.left),
+      y: GAME_HEIGHT - Math.trunc(e.touches[0].clientY - rect.top),
+    }
   }
 }
