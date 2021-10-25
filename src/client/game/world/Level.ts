@@ -6,10 +6,11 @@ import Grid from './Grid'
 import RenderContext2D, { TextAlign } from '../system/RenderContext2D'
 import Asset from '../system/Asset'
 
-import { GAME_HEIGHT } from '../Constants'
+import { GAME_HEIGHT, GAME_UNIT_SIZE } from '../Constants'
 import Color from '../../utils/color'
 import Fonts from '../../utils/fonts'
 import Vector2 from '../entity/components/Vector2'
+import { vector2ToString } from '../../utils/string'
 
 export type SolidData = {
   x: number
@@ -65,12 +66,17 @@ export default class Level extends Asset {
         // Parse block data to blocks
         const blocks: Block[] = []
         data.blocks.forEach((block) => {
-          blocks.push(
-            new Block(
-              this,
-              new AABB(block.x, block.y, block.width, block.height)
-            )
+          const newBlock = new Block(
+            this,
+            new AABB(block.x, block.y, block.width, block.height)
           )
+
+          blocks.push(newBlock)
+
+          const x = Math.floor(block.x / GAME_UNIT_SIZE)
+          const y = Math.floor((GAME_HEIGHT - block.y) / GAME_UNIT_SIZE)
+
+          this.grid.getTile(new Vector2(x, y)).setBlock(newBlock)
         })
 
         this.blocks = blocks
@@ -88,8 +94,8 @@ export default class Level extends Asset {
   Draw(render2D: RenderContext2D) {
     this.grid.Draw(render2D)
 
-    this.blocks.forEach((block) => block.Draw(render2D))
-    this.walls.forEach((wall) => wall.Draw(render2D))
+    // this.blocks.forEach((block) => block.Draw(render2D))
+    // this.walls.forEach((wall) => wall.Draw(render2D))
 
     render2D.text(
       this.name,
@@ -105,17 +111,22 @@ export default class Level extends Asset {
 
   addBlock(block: Block) {
     this.blocks.push(block)
+    return block
   }
 
-  removeBlock(blockId: string | null) {
-    if (blockId === null) {
+  removeBlock(pos: Vector2) {
+    if (!this.checkBlock(pos)) {
       throw new Error(
-        `No block of id ${blockId} exists in level ${this.fileName}`
+        `No block at ${vector2ToString(pos)} exists in level ${this.fileName}`
       )
     }
 
+    const targetBlock = this.blocks.find(
+      (block) => block.x === pos.x && block.y === pos.y
+    )
+
     this.blocks.splice(
-      this.blocks.findIndex((block) => block.uuid === blockId),
+      this.blocks.findIndex((block) => block.uuid === targetBlock.uuid),
       1
     )
   }
@@ -136,11 +147,14 @@ export default class Level extends Asset {
     return JSON.stringify(body)
   }
 
-  checkBlock(pos: Vector2): string | null {
-    const targetBlock = this.blocks.find(
-      (block) => block.x === pos.x && block.y === pos.y
-    )
+  checkBlock(pos: Vector2): boolean {
+    return !!this.blocks.find((block) => block.x === pos.x && block.y === pos.y)
+  }
 
-    return targetBlock ? targetBlock.uuid : null
+  getBlock(pos: Vector2): Block | null {
+    return (
+      this.blocks.find((block) => block.x === pos.x && block.y === pos.y) ??
+      null
+    )
   }
 }

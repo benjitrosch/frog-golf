@@ -15,12 +15,16 @@ import { MouseButton } from '../../utils/input'
 
 export default class Grid {
   private level: Level
+  public get levelIndex() {
+    return this.level.index
+  }
 
   public rows: number
   public columns: number
 
   public tiles: Tile[]
 
+  private lastMouseButton: MouseButton
   private lastMousePos: Vector2
   private get lastMousePosWorld() {
     return new Vector2(
@@ -39,7 +43,7 @@ export default class Grid {
     const tiles = []
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.columns; x++) {
-        tiles.push(new Tile(x, y))
+        tiles.push(new Tile(this, x, y))
       }
     }
     this.tiles = tiles
@@ -48,11 +52,13 @@ export default class Grid {
 
     document.addEventListener('mousedown', (e) => {
       this.mouseDown = true
-      this.selectTile(e)
+      this.lastMouseButton = e.button
+
+      this.selectTile()
     })
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', () => {
       if (this.mouseDown) {
-        this.selectTile(e)
+        this.selectTile()
       }
     })
     document.addEventListener('mouseup', () => {
@@ -83,20 +89,32 @@ export default class Grid {
         })
       }
     }
+
+    this.tiles.forEach((tile) => {
+      tile.Draw(render2D)
+    })
   }
 
-  selectTile(e: MouseEvent) {
+  checkBlock(pos: Vector2) {
+    return this.level.checkBlock(pos)
+  }
+
+  getTile(pos: Vector2): Tile | null {
+    return this.tiles.find((tile) => tile.x === pos.x && tile.y === pos.y)
+  }
+
+  selectTile() {
     if (
       Debug.Instance.enabled &&
       PlayableFrog.Instance.levelIndex === this.level.index
     ) {
-      switch (e.button) {
-        case MouseButton.LEFT:
+      switch (this.lastMouseButton) {
+        case MouseButton.LEFT: {
           if (this.level.checkBlock(this.lastMousePosWorld)) {
             return
           }
 
-          this.level.addBlock(
+          const newblock = this.level.addBlock(
             new Block(
               this.level,
               new AABB(
@@ -107,12 +125,44 @@ export default class Grid {
               )
             )
           )
+
+          this.getTile(this.lastMousePos)?.setBlock(newblock)
           break
+        }
 
         case MouseButton.RIGHT:
-          this.level.removeBlock(this.level.checkBlock(this.lastMousePosWorld))
+          this.level.removeBlock(this.lastMousePosWorld)
+          this.getTile(this.lastMousePos).removeBlock()
           break
       }
     }
   }
 }
+
+// type GridCoordinate = {
+//   // x coordinate
+//   [key: string]: {
+//     // y coordinate
+//     [key: string]: Tile
+//   }[]
+// }
+
+// const tiles: GridCoordinate[] = []
+
+// for (let y = 0; y < this.rows; y++) {
+//   const yCoord = {
+//     [`${y}`]: [],
+//   }
+
+//   console.log(yCoord)
+
+//   for (let x = 0; x < this.columns; x++) {
+//     // tiles.push(new Tile(this, x, y))
+//     yCoord[`${y}`].push({
+//       [`${x}`]: new Tile(this, x, y),
+//     })
+//   }
+
+//   tiles.push(yCoord)
+// }
+// this.tiles = tiles

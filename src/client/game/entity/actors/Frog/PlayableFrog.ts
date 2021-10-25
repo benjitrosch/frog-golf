@@ -55,12 +55,6 @@ export default class PlayableFrog extends Frog implements IPlayable {
         (!this.keys[' '] && this.state === FrogState.CROUCH) ||
         (this.keys[' '] && this.jumpGauge >= 1)
       ) {
-        if (this.jumpGauge < 0.1) {
-          this.setState(FrogState.IDLE)
-          this.jumpGauge = 0
-          return
-        }
-
         if (this.keys.ArrowLeft) this.vx = -SIDE_JUMP_HEIGHT
         else if (this.keys.ArrowRight) this.vx = SIDE_JUMP_HEIGHT
 

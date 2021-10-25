@@ -19,16 +19,17 @@ const Game = (): JSX.Element => {
 
   useEffect(() => {
     if (canvasRef.current != null) {
-      const canvas = new Canvas(canvasRef.current)
-      const render2D = new RenderContext2D(canvas)
-
       Initialize()
-      Run(render2D, new Time())
     }
   }, [])
 
   const Initialize = () => {
+    const canvas = new Canvas(canvasRef.current)
+    const render2D = new RenderContext2D(canvas)
+
     entityManager.AddEntity(PlayableFrog.Instance)
+
+    Run(render2D, new Time())
   }
 
   const Run = (render2D: RenderContext2D, time: Time) => {
