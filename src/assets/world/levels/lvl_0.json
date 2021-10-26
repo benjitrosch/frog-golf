@@ -1,1 +1,1 @@
-{"title":"SPACE to BOUNCE!","gravity":0.19,"blocks":[{"x":80,"y":300,"width":160,"height":32},{"x":256,"y":192,"width":32,"height":32}],"walls":[]}
+{"title":"SPACE to BOUNCE!","gravity":0.19,"blocks":[{"x":96,"y":320,"width":32,"height":32},{"x":128,"y":320,"width":32,"height":32},{"x":160,"y":320,"width":32,"height":32},{"x":192,"y":320,"width":32,"height":32},{"x":64,"y":320,"width":32,"height":32},{"x":224,"y":320,"width":32,"height":32}],"walls":[]}

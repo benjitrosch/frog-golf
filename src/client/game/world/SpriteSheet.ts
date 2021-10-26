@@ -1,6 +1,6 @@
 import Asset from '../system/Asset'
 
-export default class Sprite extends Asset {
+export default class SpriteSheet extends Asset {
   public image: HTMLImageElement
 
   public loaded: boolean

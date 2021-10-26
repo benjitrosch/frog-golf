@@ -1,11 +1,16 @@
 import Grid from './Grid'
-
-import RenderContext2D, { TextAlign } from '../system/RenderContext2D'
-
-import { GAME_HEIGHT, GAME_TILE_SIZE, GAME_UNIT_SIZE } from '../Constants'
-import Color from '../../utils/color'
-import Vector2 from '../entity/components/Vector2'
 import Block from '../entity/solids/Block'
+import SpriteSheet from './SpriteSheet'
+
+import RenderContext2D from '../system/RenderContext2D'
+
+import {
+  GAME_HEIGHT,
+  GAME_UNIT_SIZE,
+  GRAPHICS_SCALE_FACTOR,
+} from '../Constants'
+import Vector2 from '../entity/components/Vector2'
+import { invertedYCoord } from '../../utils/WorldCoordinates'
 
 export default class Tile {
   private grid: Grid
@@ -28,18 +33,19 @@ export default class Tile {
     return this.y * GAME_UNIT_SIZE
   }
 
-  // TODO: implement spritesheet and slicing
-  private spriteSheet: unknown
+  private spriteSheet: SpriteSheet
 
   public get tileIndex() {
-    let sum = 0
-
-    if (this.above()) sum += 1
-    if (this.below()) sum += 4
-    if (this.left()) sum += 2
-    if (this.right()) sum += 8
-
-    return sum
+    // This might just be some of the ugliest math ever done
+    // Say whatever you will about how easy JS/Typescipt is to pick up and learn
+    // but this is the most unreadable garbage ever and the fact I'm allowed to do it
+    // just feels plain wrong
+    return (
+      +!!this.above() * 1 +
+      +!!this.left() * 2 +
+      +!!this.below() * 4 +
+      +!!this.right() * 8
+    )
   }
 
   constructor(grid, x, y) {
@@ -47,30 +53,33 @@ export default class Tile {
 
     this.x = x
     this.y = y
+
+    this.spriteSheet = new SpriteSheet('world/spritesheets/bricks_SLICED.png')
   }
 
   Draw(render2D: RenderContext2D) {
     if (this.block != null) {
       this.block.Draw(render2D)
+      this.drawTile(render2D.graphics, this.tileIndex, this.worldX, this.worldY)
     }
   }
 
-  drawTile(context, tileIndex, x, y) {
-    const xStart = tileIndex * GAME_TILE_SIZE
+  drawTile(graphics: CanvasRenderingContext2D, tileIndex, x, y) {
+    const startX = tileIndex * (GAME_UNIT_SIZE * (GRAPHICS_SCALE_FACTOR / 2))
 
-    context.drawImage(
-      this.spriteSheet,
+    graphics.drawImage(
+      this.spriteSheet.image,
       // source rectangle
-      xStart,
+      startX,
       0,
-      GAME_TILE_SIZE,
-      GAME_TILE_SIZE,
+      GAME_UNIT_SIZE * (GRAPHICS_SCALE_FACTOR / 2),
+      GAME_UNIT_SIZE * (GRAPHICS_SCALE_FACTOR / 2),
 
       // destination
       x,
-      y,
-      GAME_TILE_SIZE,
-      GAME_TILE_SIZE
+      invertedYCoord(y, 0, GAME_UNIT_SIZE),
+      GAME_UNIT_SIZE,
+      GAME_UNIT_SIZE
     )
   }
 

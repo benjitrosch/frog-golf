@@ -2,7 +2,7 @@ export const GAME_WIDTH = 320 // 375
 export const GAME_HEIGHT = 640 // 651
 
 export const GAME_UNIT_SIZE = 32
-export const GAME_TILE_SIZE = 32
+export const GRAPHICS_SCALE_FACTOR = 10
 
 export const DEFAULT_GRAVITY = 0.19
 export const LINEAR_DRAG = 0.996

@@ -95,7 +95,7 @@ export default class Level extends Asset {
     this.grid.Draw(render2D)
 
     // this.blocks.forEach((block) => block.Draw(render2D))
-    // this.walls.forEach((wall) => wall.Draw(render2D))
+    this.walls.forEach((wall) => wall.Draw(render2D)) // TODO: remove
 
     render2D.text(
       this.name,

@@ -8,6 +8,7 @@ import RenderContext2D from '../game/system/RenderContext2D'
 import EntityManager from '../game/entity/EntityManager'
 import Map from '../game/world/Map'
 import Debug from '../game/system/Debug'
+import CloudManager from '../game/world/background/CloudManager'
 
 import PlayableFrog from '../game/entity/actors/Frog/PlayableFrog'
 
@@ -28,6 +29,7 @@ const Game = (): JSX.Element => {
     const canvas = new Canvas(canvasRef.current)
     const render2D = new RenderContext2D(canvas)
 
+    CloudManager.Instance.Load()
     GameManager.Instance.setCanvas(canvas)
 
     entityManager.AddEntity(PlayableFrog.Instance)
@@ -52,6 +54,7 @@ const Game = (): JSX.Element => {
   }
 
   const Update = (time: Time) => {
+    CloudManager.Instance.Update(time)
     entityManager.Update(time)
   }
 
@@ -63,6 +66,7 @@ const Game = (): JSX.Element => {
         'hue-rotate(' + 40 * PlayableFrog.Instance.levelIndex + 'deg)'
     }
 
+    CloudManager.Instance.Draw(render2D)
     Map.Instance.Draw(render2D)
     entityManager.Draw(render2D)
     Debug.Instance.Draw(render2D)

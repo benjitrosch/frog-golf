@@ -6,6 +6,8 @@ import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
 import Debug from '../../../system/Debug'
 
+import CloudManager from '../../../world/background/CloudManager'
+
 import {
   GAME_HEIGHT,
   GAME_WIDTH,
@@ -17,6 +19,8 @@ import {
 export default class PlayableFrog extends Frog implements IPlayable {
   private static _instance: PlayableFrog
   public keys: Record<ArrowKey, boolean>
+
+  private prevLevel: number
 
   private constructor() {
     super(GAME_WIDTH / 2, 0)
@@ -74,6 +78,12 @@ export default class PlayableFrog extends Frog implements IPlayable {
 
         this.totalJumps++
       }
+    }
+
+    if (this.prevLevel !== this.levelIndex) {
+      this.prevLevel = this.levelIndex
+
+      CloudManager.Instance.generateClouds()
     }
   }
 

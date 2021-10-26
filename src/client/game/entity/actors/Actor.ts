@@ -2,7 +2,7 @@ import Entity from '../Entity'
 
 import Vector2 from '../components/Vector2'
 import AABB from '../components/AABB'
-import Sprite from '../Sprite'
+import StateSprite from '../StateSprite'
 import SoundFX from '../SoundFX'
 
 import Time from '../../system/Time'
@@ -67,8 +67,8 @@ export default abstract class Actor<S> extends Entity {
   protected onGround: boolean
 
   public state: S
-  protected spritesLeft: Sprite<S>[]
-  protected spritesRight: Sprite<S>[]
+  protected spritesLeft: StateSprite<S>[]
+  protected spritesRight: StateSprite<S>[]
   protected soundFX: Record<string, SoundFX>
 
   constructor(x, y, size) {
@@ -132,7 +132,7 @@ export default abstract class Actor<S> extends Entity {
     }
   }
 
-  abstract getDrawImage(): Sprite<S>
+  abstract getDrawImage(): StateSprite<S>
 
   setState(state: S) {
     if (this.state !== state) {
@@ -327,7 +327,7 @@ export default abstract class Actor<S> extends Entity {
   collideToWall(s, r, onHit?: () => void) {
     this.x = s.x
     this.y = s.y
-    this.vx = r.x * LINEAR_DRAG
+    this.vx = r.x * BOUND_FRICTION
     this.vy = r.y
 
     this.direction = Math.sign(this.vx)

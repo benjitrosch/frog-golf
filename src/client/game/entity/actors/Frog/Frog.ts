@@ -2,7 +2,7 @@ import Actor, { Direction } from '../Actor'
 
 import RenderContext2D from '../../../system/RenderContext2D'
 import Time from '../../../system/Time'
-import Sprite from '../../Sprite'
+import StateSprite from '../../StateSprite'
 import SoundFX from '../../SoundFX'
 import Map from '../../../world/Map'
 
@@ -36,45 +36,45 @@ export default class Frog extends Actor<FrogState> {
 
   Load() {
     // Frog Sprites
-    const idleLeft = new Sprite(
+    const idleLeft = new StateSprite(
       FrogState.IDLE,
       Direction.LEFT,
       'frog/sprites/idle_LEFT.png'
     )
-    const idleRight = new Sprite(
+    const idleRight = new StateSprite(
       FrogState.IDLE,
       Direction.RIGHT,
       'frog/sprites/idle_RIGHT.png'
     )
 
-    const crouchLeft = new Sprite(
+    const crouchLeft = new StateSprite(
       FrogState.CROUCH,
       Direction.LEFT,
       'frog/sprites/crouch_LEFT.png'
     )
-    const crouchRight = new Sprite(
+    const crouchRight = new StateSprite(
       FrogState.CROUCH,
       Direction.RIGHT,
       'frog/sprites/crouch_RIGHT.png'
     )
 
-    const jumpLeft = new Sprite(
+    const jumpLeft = new StateSprite(
       FrogState.JUMP,
       Direction.LEFT,
       'frog/sprites/jump_LEFT.png'
     )
-    const jumpRight = new Sprite(
+    const jumpRight = new StateSprite(
       FrogState.JUMP,
       Direction.RIGHT,
       'frog/sprites/jump_RIGHT.png'
     )
 
-    const fallLeft = new Sprite(
+    const fallLeft = new StateSprite(
       FrogState.FALL,
       Direction.LEFT,
       'frog/sprites/fall_LEFT.png'
     )
-    const fallRight = new Sprite(
+    const fallRight = new StateSprite(
       FrogState.FALL,
       Direction.RIGHT,
       'frog/sprites/fall_RIGHT.png'
